@@ -96,23 +96,25 @@
 
 
 
-  <meta name="description" content="Huppert&apos;s personal world.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Huppert&#39;s world">
-<meta property="og:url" content="http://huppert.top/index.html">
+  <meta name="description" content="1.连接上租的vps之后首先要更新一下yum -y update2.然后安装比较常用的软件yum -y install wget vim3.进入ssh配置目录修改ssh端口号为不常用的端口号（1996）。vim /etc/ssh/sshd_config4.由于默认安装的是python2.6版本，需要先升级为2.7版本。4.1先安装依赖yum -y install gcc openssl-devel">
+<meta name="keywords" content="开始,日志">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos6搭建ss">
+<meta property="og:url" content="http://huppert.top/2019-02-23-123.html">
 <meta property="og:site_name" content="Huppert&#39;s world">
-<meta property="og:description" content="Huppert&apos;s personal world.">
+<meta property="og:description" content="1.连接上租的vps之后首先要更新一下yum -y update2.然后安装比较常用的软件yum -y install wget vim3.进入ssh配置目录修改ssh端口号为不常用的端口号（1996）。vim /etc/ssh/sshd_config4.由于默认安装的是python2.6版本，需要先升级为2.7版本。4.1先安装依赖yum -y install gcc openssl-devel">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-24T02:58:23.852Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Huppert&#39;s world">
-<meta name="twitter:description" content="Huppert&apos;s personal world.">
+<meta name="twitter:title" content="centos6搭建ss">
+<meta name="twitter:description" content="1.连接上租的vps之后首先要更新一下yum -y update2.然后安装比较常用的软件yum -y install wget vim3.进入ssh配置目录修改ssh端口号为不常用的端口号（1996）。vim /etc/ssh/sshd_config4.由于默认安装的是python2.6版本，需要先升级为2.7版本。4.1先安装依赖yum -y install gcc openssl-devel">
 
 
 
 
 
 
-  <link rel="canonical" href="http://huppert.top/">
+  <link rel="canonical" href="http://huppert.top/2019-02-23-123.html">
 
 
 
@@ -122,7 +124,7 @@
   };
 </script>
 
-  <title>Huppert's world</title>
+  <title>centos6搭建ss | Huppert's world</title>
   
 
 
@@ -170,8 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -213,7 +214,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -275,9 +276,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -309,10 +310,8 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019-02-23-123.html" class="post-title-link" itemprop="url">centos6搭建ss</a>
+          <h1 class="post-title" itemprop="name headline">centos6搭建ss
+
               
             
           </h1>
@@ -406,15 +405,11 @@
       
 
       
-        
-          
-            <p>1.连接上租的vps之后首先要更新一下<br>yum -y update<br>2.然后安装比较常用的软件<br>yum -y install wget vim<br>3.进入ssh配置目录修改ssh端口号为不常用的端口号（1996）。<br>vim /etc/ssh/sshd_config<br>4.由于默认安装的是python2.6版本，需要先升级为2.7版本。<br>4.1先安装依赖<br>yum -y install gcc openssl-devel bzip2-devel<br>4.2下载软件包<br>cd /opt &amp;&amp; wget <a href="https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz" target="_blank" rel="noopener">https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz</a><br>4.3解压<br>tar xvzf Python-2.7.15.tgz<br>4.4进入目录安装（在检测脚本中加上enable-optimizations优化，主要是在这个版本上能启用PGO优化，让Python在运行时能变得更快。make 加altinstall参数，避免覆盖原来安装在/usr/bin/python 的版本。）<br>cd Python-2.7.15<br>./configure –enable-optimizations<br>make &amp;&amp; make altinstall<br>4.5查看是否安装成功<br>/usr/local/bin/python2.7 -V<br>返回2.7.15则成功，继续进行下一步<br>4.6建立软链接，使系统默认python指向2.7版本<br>mv /usr/bin/python /usr/bin/python2.6.6    (备份原来的2.6版本的python)<br>ln -s /usr/local/bin/python2.7 /usr/bin/python<br>4.7解决yum不支持2.7版本的问题<br>sed -i ‘s/python/python2.6.6/‘ /usr/bin/yum<br>5.安装pip（因为2.7.15版本已经内建了ensurepip模块，所以直接运行下面的命令去安装pip即可）默认安装的pip为9版本，你需要再升级一下pip版本。<br>python -m ensurepip<br>pip install –upgrade pip<br>6.pip安装shadowsocks<br>pip install shadowsocks<br>7.修改配置文件<br>vim /etc/shadowsocks.json<br>单用户内容为<br>{<br>    “server”:”服务器的IP地址”,<br>    “server_port”:服务监听的端口号,<br>    “local_address”: “127.0.0.1”,<br>    “local_port”:1080,<br>    “password”:”监听端口密码”,<br>    “timeout”:300,<br>    “method”:”rc4-md5”,<br>    “fast_open”: false<br>}<br>多用户内容为<br>{<br>    “server”:”服务器IP地址”,<br>    “local_address”:”127.0.0.1”,<br>    “local_port”:1080,<br>    “port_password”:{<br>         “8989”:”password0”,<br>         “9004”:”password2”<br>    },<br>    “timeout”:300,<br>    “method”:”rc4-md5”,<br>    “fast_open”: false<br>}<br>8.运行前安装加密<br>yum -y install m2crypto<br>9.（可选）安装gevent<br>安装gevent可以提高Shadowsocks的性能。CentOS下安装gevent依赖libevent和greenlet。<br>9.1安装libevent<br>yum install -y libevent<br>9.2安装greenlet<br>pip install  greenlet<br>9.3安装gevent<br>pip install gevent<br>10.安装破解版锐速<br>参照<a href="https://www.vultrcn.com/7.html" target="_blank" rel="noopener">https://www.vultrcn.com/7.html</a>  此地址的内容。<br>11.启动与停止shadowsocks<br>启动ssserver -c /etc/shadowsocks.json -d start<br>停止ssserver -c /etc/shadowsocks.json -d stop<br>12.配置开机启动<br>12.1在/etc/init.d/下添加一个shadowsocks服务<br>vim /etc/init.d/shadowsocks<br>添加以下内容</p>
+        <p>1.连接上租的vps之后首先要更新一下<br>yum -y update<br>2.然后安装比较常用的软件<br>yum -y install wget vim<br>3.进入ssh配置目录修改ssh端口号为不常用的端口号（1996）。<br>vim /etc/ssh/sshd_config<br>4.由于默认安装的是python2.6版本，需要先升级为2.7版本。<br>4.1先安装依赖<br>yum -y install gcc openssl-devel bzip2-devel<br>4.2下载软件包<br>cd /opt &amp;&amp; wget <a href="https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz" target="_blank" rel="noopener">https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz</a><br>4.3解压<br>tar xvzf Python-2.7.15.tgz<br>4.4进入目录安装（在检测脚本中加上enable-optimizations优化，主要是在这个版本上能启用PGO优化，让Python在运行时能变得更快。make 加altinstall参数，避免覆盖原来安装在/usr/bin/python 的版本。）<br>cd Python-2.7.15<br>./configure –enable-optimizations<br>make &amp;&amp; make altinstall<br>4.5查看是否安装成功<br>/usr/local/bin/python2.7 -V<br>返回2.7.15则成功，继续进行下一步<br>4.6建立软链接，使系统默认python指向2.7版本<br>mv /usr/bin/python /usr/bin/python2.6.6    (备份原来的2.6版本的python)<br>ln -s /usr/local/bin/python2.7 /usr/bin/python<br>4.7解决yum不支持2.7版本的问题<br>sed -i ‘s/python/python2.6.6/‘ /usr/bin/yum<br>5.安装pip（因为2.7.15版本已经内建了ensurepip模块，所以直接运行下面的命令去安装pip即可）默认安装的pip为9版本，你需要再升级一下pip版本。<br>python -m ensurepip<br>pip install –upgrade pip<br>6.pip安装shadowsocks<br>pip install shadowsocks<br>7.修改配置文件<br>vim /etc/shadowsocks.json<br>单用户内容为<br>{<br>    “server”:”服务器的IP地址”,<br>    “server_port”:服务监听的端口号,<br>    “local_address”: “127.0.0.1”,<br>    “local_port”:1080,<br>    “password”:”监听端口密码”,<br>    “timeout”:300,<br>    “method”:”rc4-md5”,<br>    “fast_open”: false<br>}<br>多用户内容为<br>{<br>    “server”:”服务器IP地址”,<br>    “local_address”:”127.0.0.1”,<br>    “local_port”:1080,<br>    “port_password”:{<br>         “8989”:”password0”,<br>         “9004”:”password2”<br>    },<br>    “timeout”:300,<br>    “method”:”rc4-md5”,<br>    “fast_open”: false<br>}<br>8.运行前安装加密<br>yum -y install m2crypto<br>9.（可选）安装gevent<br>安装gevent可以提高Shadowsocks的性能。CentOS下安装gevent依赖libevent和greenlet。<br>9.1安装libevent<br>yum install -y libevent<br>9.2安装greenlet<br>pip install  greenlet<br>9.3安装gevent<br>pip install gevent<br>10.安装破解版锐速<br>参照<a href="https://www.vultrcn.com/7.html" target="_blank" rel="noopener">https://www.vultrcn.com/7.html</a>  此地址的内容。<br>11.启动与停止shadowsocks<br>启动ssserver -c /etc/shadowsocks.json -d start<br>停止ssserver -c /etc/shadowsocks.json -d stop<br>12.配置开机启动<br>12.1在/etc/init.d/下添加一个shadowsocks服务<br>vim /etc/init.d/shadowsocks<br>添加以下内容</p>
 <p>#!/bin/sh</p>
 <h1 id="chkconfig-2345-90-10"><a href="#chkconfig-2345-90-10" class="headerlink" title="chkconfig: 2345 90 10"></a>chkconfig: 2345 90 10</h1><h1 id="description-Start-or-stop-the-Shadowsocks-server"><a href="#description-Start-or-stop-the-Shadowsocks-server" class="headerlink" title="description: Start or stop the Shadowsocks server"></a>description: Start or stop the Shadowsocks server</h1><p>#</p>
 <h3 id="BEGIN-INIT-INFO"><a href="#BEGIN-INIT-INFO" class="headerlink" title="BEGIN INIT INFO"></a>BEGIN INIT INFO</h3><h1 id="Provides-Shadowsocks"><a href="#Provides-Shadowsocks" class="headerlink" title="Provides: Shadowsocks"></a>Provides: Shadowsocks</h1><h1 id="Required-Start-network-syslog"><a href="#Required-Start-network-syslog" class="headerlink" title="Required-Start: $network $syslog"></a>Required-Start: $network $syslog</h1><h1 id="Required-Stop-network"><a href="#Required-Stop-network" class="headerlink" title="Required-Stop: $network"></a>Required-Stop: $network</h1><h1 id="Default-Start-2-3-4-5"><a href="#Default-Start-2-3-4-5" class="headerlink" title="Default-Start: 2 3 4 5"></a>Default-Start: 2 3 4 5</h1><h1 id="Default-Stop-0-1-6"><a href="#Default-Stop-0-1-6" class="headerlink" title="Default-Stop: 0 1 6"></a>Default-Stop: 0 1 6</h1><h1 id="Description-Start-or-stop-the-Shadowsocks-server"><a href="#Description-Start-or-stop-the-Shadowsocks-server" class="headerlink" title="Description: Start or stop the Shadowsocks server"></a>Description: Start or stop the Shadowsocks server</h1><h3 id="END-INIT-INFO"><a href="#END-INIT-INFO" class="headerlink" title="END INIT INFO"></a>END INIT INFO</h3><h1 id="Author-xju-113-x69-x6e-x67-x30-x39-x39-x31-64-49-54-51-46-x63-x6f-109"><a href="#Author-xju-113-x69-x6e-x67-x30-x39-x39-x31-64-49-54-51-46-x63-x6f-109" class="headerlink" title="Author: xju &#113;&#x69;&#x6e;&#x67;&#x30;&#x39;&#x39;&#x31;&#64;&#49;&#54;&#51;&#46;&#x63;&#x6f;&#109;"></a>Author: xju <a href="mailto:&#113;&#x69;&#x6e;&#x67;&#x30;&#x39;&#x39;&#x31;&#64;&#49;&#54;&#51;&#46;&#x63;&#x6f;&#109;" target="_blank" rel="noopener">&#113;&#x69;&#x6e;&#x67;&#x30;&#x39;&#x39;&#x31;&#64;&#49;&#54;&#51;&#46;&#x63;&#x6f;&#109;</a></h1><p>name=shadowsocks<br>BIN=/usr/local/bin/ssserver<br>conf=/etc/shadowsocks.json<br>start(){<br>    $BIN -c $conf -d start<br>    RETVAL=$?<br>    if [ “$RETVAL” = “0” ]; then<br>        echo “$name start success”<br>    else<br>        echo “$name start failed”<br>    fi<br>}<br>stop(){<br>    pid=<code>ps -ef | grep -v grep | grep -v ps | grep -i &quot;${BIN}&quot; | awk &#39;{print $2}&#39;</code><br>    if [ ! -z $pid ]; then<br>        $BIN -c $conf -d stop<br>        RETVAL=$?<br>        if [ “$RETVAL” = “0” ]; then<br>            echo “$name stop success”<br>        else<br>            echo “$name stop failed”<br>        fi<br>    else<br>        echo “$name is not running”<br>        RETVAL=1<br>    fi<br>}<br>status(){<br>    pid=<code>ps -ef | grep -v grep | grep -v ps | grep -i &quot;${BIN}&quot; | awk &#39;{print $2}&#39;</code><br>    if [ -z $pid ]; then<br>        echo “$name is not running”<br>        RETVAL=1<br>    else<br>        echo “$name is running with PID $pid”<br>        RETVAL=0<br>    fi<br>}<br>case “$1” in<br>‘start’)<br>    start<br>    ;;<br>‘stop’)<br>    stop<br>    ;;<br>‘status’)<br>    status<br>    ;;<br>‘restart’)<br>    stop<br>    start<br>    RETVAL=$?<br>    ;;<br>*)<br>    echo “Usage: $0 { start | stop | restart | status }”<br>    RETVAL=1<br>    ;;<br>esac<br>exit $RETVAL<br>12.2添加执行权限<br>chmod +x /etc/init.d/shadowsocks<br>12.3启动停止服务<br>services shadowsocks { status | start | stop | restart }<br>12.4添加开机启动服务<br>chkconfig –add shadowsocks<br>chkconfig –list shadowsocks<br>输出shadowsocks     0:off   1:off   2:on    3:on    4:on    5:on    6:off即为成功。<br>13.关闭防火墙，并关闭防火墙自启动<br>service iptables stop<br>chkconfig iptables off<br>chkconfig –list iptables   （检查防火墙是否关闭自启动iptables        0:off   1:off   2:off   3:off   4:off   5:off   6:off）</p>
 
-          
-        
       
     </div>
 
@@ -435,161 +430,38 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huppert.top/2019-02-22-hello-world.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yupeng Cao">
-      <meta itemprop="description" content="Huppert's personal world.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huppert's world">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019-02-22-hello-world.html" class="post-title-link" itemprop="url">Hello World</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-22 22:57:11" itemprop="dateCreated datePublished" datetime="2019-02-22T22:57:11+08:00">2019-02-22</time>
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/开始/" rel="tag"># 开始</a>
           
-            
-            
+            <a href="/tags/日志/" rel="tag"># 日志</a>
           
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019-02-22-hello-world.html" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -599,14 +471,15 @@
   </article>
 
 
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -626,8 +499,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -699,6 +581,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chkconfig-2345-90-10"><span class="nav-number">1.</span> <span class="nav-text">chkconfig: 2345 90 10</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#description-Start-or-stop-the-Shadowsocks-server"><span class="nav-number">2.</span> <span class="nav-text">description: Start or stop the Shadowsocks server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BEGIN-INIT-INFO"><span class="nav-number">2.0.1.</span> <span class="nav-text">BEGIN INIT INFO</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#Provides-Shadowsocks"><span class="nav-number">3.</span> <span class="nav-text">Provides: Shadowsocks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Required-Start-network-syslog"><span class="nav-number">4.</span> <span class="nav-text">Required-Start: $network $syslog</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Required-Stop-network"><span class="nav-number">5.</span> <span class="nav-text">Required-Stop: $network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Default-Start-2-3-4-5"><span class="nav-number">6.</span> <span class="nav-text">Default-Start: 2 3 4 5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Default-Stop-0-1-6"><span class="nav-number">7.</span> <span class="nav-text">Default-Stop: 0 1 6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Description-Start-or-stop-the-Shadowsocks-server"><span class="nav-number">8.</span> <span class="nav-text">Description: Start or stop the Shadowsocks server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#END-INIT-INFO"><span class="nav-number">8.0.1.</span> <span class="nav-text">END INIT INFO</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Author-xju-113-x69-x6e-x67-x30-x39-x39-x31-64-49-54-51-46-x63-x6f-109"><span class="nav-number">9.</span> <span class="nav-text">Author: xju qing0991@163.com</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -827,6 +726,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
 
   
 
@@ -837,6 +740,8 @@
   
   
 
+
+  
 
 
   
