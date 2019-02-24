@@ -61,10 +61,10 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/daima-32x32.png?v=7.0.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/daima-16x16.png?v=7.0.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
 
 
   <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
@@ -81,7 +81,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -104,7 +104,7 @@
 
 
   <meta name="description" content="服务搭建 连接上租的vps之后首先要更新一下 yum -y update  然后安装比较常用的软件 yum -y install wget vim  进入ssh配置目录修改ssh端口号为不常用的端口号（这里我用的是1996） vim /etc/ssh/sshd_config  更新python版本（由于默认安装的是python2.6版本，需要先升级为2.7版本） 4.1 先安装依赖 yum -y">
-<meta name="keywords" content="建站,shadowsocks,centos6">
+<meta name="keywords" content="建站,centos6,shadowsocks">
 <meta property="og:type" content="article">
 <meta property="og:title" content="centos6搭建ss">
 <meta property="og:url" content="http://huppert.top/2019-02-24-centos6搭建ss.html">
@@ -238,23 +238,6 @@
         
         
           
-          <li class="menu-item menu-item-about">
-
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
-
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-tags">
 
     
@@ -266,23 +249,6 @@
     
 
     <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
-
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
-
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
 
   </li>
         
@@ -306,6 +272,23 @@
         
         
           
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-schedule">
 
     
@@ -317,6 +300,23 @@
     
 
     <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
 
   </li>
 
@@ -631,9 +631,9 @@
           
             <a href="/tags/建站/" rel="tag"># 建站</a>
           
-            <a href="/tags/shadowsocks/" rel="tag"># shadowsocks</a>
-          
             <a href="/tags/centos6/" rel="tag"># centos6</a>
+          
+            <a href="/tags/shadowsocks/" rel="tag"># shadowsocks</a>
           
         </div>
       
@@ -797,17 +797,6 @@
                   <a href="mailto:caoyp1214@163.com" title="E-Mail &rarr; mailto:caoyp1214@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                 </span>
               
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://weibo.com/小鸟说_早_早_早" title="Weibo &rarr; https://weibo.com/小鸟说_早_早_早" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
-                </span>
-              
             </div>
           
 
@@ -857,7 +846,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-fa-free-code-camp"></i>
   </span>
