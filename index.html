@@ -394,7 +394,7 @@
                 
               
 
-              <time title="创建时间：2019-02-25 12:01:03 / 修改时间：12:34:38" itemprop="dateCreated datePublished" datetime="2019-02-25T12:01:03+08:00">2019-02-25</time>
+              <time title="创建时间：2019-02-25 12:01:03 / 修改时间：12:35:34" itemprop="dateCreated datePublished" datetime="2019-02-25T12:01:03+08:00">2019-02-25</time>
             
 
             
@@ -458,7 +458,9 @@
 <ol>
 <li><p>win+R打开运行框，输入regedit</p>
 </li>
-<li><p>找到 <figure class="highlight plain"><figcaption><span>```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 删除 ``` REG_BINARY</span><br></pre></td></tr></table></figure></p>
+<li><p>找到 <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TerminalServer\RCM\GracePeriod</code></p>
+</li>
+<li><p>删除 <code>REG_BINARY</code></p>
 </li>
 <li><p>重启服务器</p>
 </li>
