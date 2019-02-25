@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[windows_server限制2人连接]]></title>
     <url>%2F2019-02-25-windows-server%E9%99%90%E5%88%B62%E4%BA%BA%E8%BF%9E%E6%8E%A5.html</url>
-    <content type="text"><![CDATA[之所以写这篇博客，是因为之前在公司实习的时候遇到了一个问题，多人使用同一台Windows server服务器，一直连接着的时候还没问题，但是如果某个人断开连接以后就无法再重新连接上了，经过多方排查，发现问题出在Windows server的远程连接机制上。原来微软对Windows server的远程登陆有人数限制，最多只能有两个，如果超过这个数目的人数想使用就必须使用license server进行授权才可以，而且据说授权是收费行为。那么为什么一开始可以多人同时连接呢，原来官方给予了120天的实践来配置license server，如果超过120天仍没有可用的license server，就会出现无法连接的问题。这里给出的解决方案是修改注册表 win+R打开运行框，输入regedit 找到13. 删除 ```REG_BINARY 重启服务器这样你就可以重新获得120天的免费使用。修改注册表是投机取巧的办法，也比较麻烦，所以可以部署license server来直接授权使用。但是部署服务器来进行授权比较麻烦，感兴趣的可以自己百度或者Google一下。]]></content>
+    <content type="text"><![CDATA[背景介绍之所以写这篇博客，是因为之前在公司实习的时候遇到了一个问题，多人使用同一台Windows server服务器，一直连接着的时候还没问题，但是如果某个人断开连接以后就无法再重新连接上了，经过多方排查，发现问题出在Windows server的远程连接机制上。原来微软对Windows server的远程登陆有人数限制，最多只能有两个，如果超过这个数目的人数想使用就必须使用license server进行授权才可以，而且据说授权是收费行为。那么为什么一开始可以多人同时连接呢，原来官方给予了120天的实践来配置license server，如果超过120天仍没有可用的license server，就会出现无法连接的问题。 解决方案这里给出的解决方案是修改注册表 win+R打开运行框，输入regedit 找到13. 删除 ```REG_BINARY 重启服务器这样你就可以重新获得120天的免费使用。修改注册表是投机取巧的办法，也比较麻烦，所以可以部署license server来直接授权使用。但是部署服务器来进行授权比较麻烦，感兴趣的可以自己百度或者Google一下。]]></content>
       <categories>
         <category>教程</category>
       </categories>
