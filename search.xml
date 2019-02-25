@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ubuntu使用LVM时遇到的问题及基本操作]]></title>
+    <url>%2F2019-02-25-ubuntu%E4%BD%BF%E7%94%A8LVM%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html</url>
+    <content type="text"><![CDATA[#背景介绍前一段时间在公司实习的时候公司服务器磁盘管理严重不规范，并且一台服务器上又很多块磁盘，大小也不一样，有的磁盘使用率接近100%。有的磁盘使用率却只有不到20%，所以我就决定给磁盘做一下LVM，重新分区，然后再根据使用状况将不同的目录挂载到不同的分区。期间遇到了一些问题，趁着这次整理blog顺便将LVM的命令和遇到的问题整理一下大家一起学习。 #什么是lvmLVM是逻辑盘卷管理（Logical Volume Manager）的简称,它是一种磁盘管理工具，他的重点在于可以弹性的调整filesystem的容量，而且可以将多个实体的磁盘整合到一起，使其变成一个磁盘，还可以在以后继续往LVM管理的磁盘中添加或者删除实体磁盘。LVM中有几个名词需要理解一下： PV（Physical Volume）实体卷轴 VG（Volume Group）卷轴群组 PE（Physical Extent）实体范围区块 LV（Logical Volume）逻辑卷轴#LVM的使用 首先需要安装一下lvm这个软件sudo apt-get install lvm2 安装完之后首先将想要添加到LVM卷的磁盘转换磁盘ID，转换为Linux LVMfdisk /dev/sda 格式化想要添加到LVM中的分区，并挂载到系统当中mkfs.ext4 或者 mkfs.xfs格式化,然后mount挂载 PV阶段4.1 将磁盘创建为PVpvcreate /dev/sda14.2 查看当前系统中已经转化为PV的磁盘pvscan4.3 为显示某一个pv的详细信息pvdisplay /dev/sda14.4 为将该分区移除pv属性pvremove /dev/sda VG阶段5.1 创建VGvgcreate [-s N[mgt]] VG名称 PV名称PS：-s后接的是PE的大小，单位为m，g，t（不区分大小写）5.2 查看系统上所有的VGvgscan5.3 显示某一个VG的详细信息vgdisplay VG名称5.4 在VG中增加额外的PVvgextend VG名称 PV名称5.5 从VG中移除PVvgreduce VG名称 PV名称5.6 删除VGvgremove VG名称 LV阶段6.1 创建LVlvcreate [-L N[mgt]] [-n LV名称 ] VG名称lvcreate [-l N] [-n LV名称 ] VG名称PS:创建LV有两种方式，一种是以容量为单位，即-L，因为LVM中容量的最小单位为PE，所以—L后面的数量必须 是PE的倍数，如果不是，系统会自动计算相近的容量。另一种是以PE的个数为单位，如果这么做，需要计算PE 的 数量，不过可以通过 vgdisplay VG名称 来查看一个VG中总共有多少个PE，已用多少，可用多少。6.2 查询系统上的LVlvscan6.3 显示某一个LV的详细信息lvdisplay LV全名6.4 扩展LV的容量lvextend -L +N[mgt] LV全名6.5 减少LV的容量lvreduce -L -N[mgt] LV全名6.6 改变LV的容量lvresize -L [+/-]N[mgt] LV全名例如：增加20Glvresize -L +20G LV全名或减小20Glvresize -L -20G LV全名或增大或减小到20Glvresize -L 20G LV全名6.7 删除LVlvremove LV全名6.8 注意事项LV的全名为/dev/VG名称/LV名称LV设置完成之后需要格式化并挂载才能使用，挂载之后LV为/dev/mapper/VG名称-LV名称我们linux使用的并不是LV，而是LV设备内的文件系统，目前只有XFS和EXT家族可以放大容量，只有EXT家族可 以缩小容量改变LV容量之后想要生效需要执行resize2fs LV全名 安装完lvm2之后使用lvm的相关命令是发现有错误，这是因为lvm的相关服务并没有开启，执行以下命令即可1234systemctl enable lvm2-lvmetad.servicesystemctl enable lvm2-lvmetad.socketsystemctl start lvm2-lvmetad.servicesystemctl start lvm2-lvmetad.socket]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Ubuntu</tag>
+        <tag>LVM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ubuntu重做引导]]></title>
     <url>%2F2019-02-25-ubuntu%E9%87%8D%E5%81%9A%E5%BC%95%E5%AF%BC.html</url>
     <content type="text"><![CDATA[背景介绍相信很多小伙伴都遇到过Ubuntu系统丢失引导的问题。这个问题之所以会出现一般有一下几点： 安装完Ubuntu系统之后又安装Windows系统，导致Windows系统引导覆盖掉了Ubuntu系统的引导。 安装好系统之后不小心动到了安装引导的分区，导致引导丢失。 电脑操作系统出现问题的情况千千万万，数不胜数，就不一一列举。 解决办法 首先你要有一个Ubuntu的系统盘，不过既然你已经安装了Ubuntu系统，系统盘应该是有的。 通过系统盘启动，选择试用系统。 打开终端，可以桌面右键然后选择终端，也可以ctrl+alt+T快捷键打开。 sudo -i切换至root用户。 fdisk -l查看自己系统目前的分区状况。 由图可见Ubuntu分区是有很明确的分区描述的，只需通过分区大小确定你的根目录所在分区，然后在第7步挂载你的根目录所在分区即可。 mkdir /media/ubuntu创建一个文件夹用来挂载Ubuntu系统，可以不必一定创建这个目录。 mount /dev/sda4 /media/ubuntu挂载Ubuntu系统到这个目录下。/dev/sda4即第5步所看到的Ubuntu系统所在的分区。挂载完成之后可以ls /media/ubuntu查看一下，确保挂载的为根目录，而不是/home目录或其他目录。 grub-install --root-directory=/media/ubuntu /dev/sda 修复grub引导。 此时你的Ubuntu系统的引导已经修复完成，重启系统即可直接进入Ubuntu系统。 如果你安装的还有Windows系统的话，这时你在grub界面已经看不到你的Windows系统的引导选项了。 这是因为刚才修复的Ubuntu系统的引导已经将其覆盖掉了。 修复引导很简单，进入系统以后打开终端输入sudo update-grub即可。]]></content>
@@ -35,8 +47,8 @@
       </categories>
       <tags>
         <tag>建站</tag>
-        <tag>centos</tag>
         <tag>shadowsocks</tag>
+        <tag>centos</tag>
       </tags>
   </entry>
   <entry>
@@ -48,8 +60,8 @@
       </categories>
       <tags>
         <tag>建站</tag>
-        <tag>shadowsocks</tag>
         <tag>centos6</tag>
+        <tag>shadowsocks</tag>
       </tags>
   </entry>
 </search>
