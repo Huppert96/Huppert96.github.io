@@ -349,6 +349,396 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huppert.top/2019-03-07-ss-first出问题的排查思路和解决方案.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yupeng Cao">
+      <meta itemprop="description" content="得到的和想要的对不上号">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huppert's world">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019-03-07-ss-first出问题的排查思路和解决方案.html" class="post-title-link" itemprop="url">ss_first出问题的排查思路和解决方案</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-07 17:42:07 / 修改时间：21:54:56" itemprop="dateCreated datePublished" datetime="2019-03-07T17:42:07+08:00">2019-03-07</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/日志/" itemprop="url" rel="index"><span itemprop="name">日志</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>直接进入正文，事情的起因是今天本来再了解esxi，也就是vsphere相关的组件，准备搞一个esxi用来方便自己练习，尝试keepalived、zabbix、nginx、ansible等各种运维需要用到的工具环境，但是在查找资料的过程中突然发现我的ss挂了，不能番羽土蔷了，瞬间很惊慌，接下来是我排查问题，到解决问题的全过程。</p>
+<ol>
+<li><p>首先我看了自己的手机还能不能使用，因为有可能只是电脑不能使用，这种情况也不是没有出现过，但是尝试之后发现手机也不能用了，那么基本上已经可以断定是服务器出问题了。</p>
+</li>
+<li><p>接下来就要排查到底是服务器哪儿出问题了，首先猜想是不是服务器被土蔷了，首先打开Windows的命令行，<code>win+R</code>，然后输入<code>cmd</code>，回车，<code>ping x.x.x.x</code>测试服务器是否还能通信，是否者挂掉了或被土蔷了，结果显示很正常。</p>
+</li>
+<li><p>既然服务器正常运行，那么就要通过ssh服务连上服务器查找问题了。<br>可以<code>win+R</code>然后输入<code>cmd</code>，回车，然后输入<code>ssh someone@x.x.x.x -p 1122</code>，回车，其中someone是你的登陆账号，-p后面的事你的ssh端口号。第一次登陆会让输入yes or no，选择是否信任这台主机，yes回车即可，然后输入someone账户的密码，进入服务器。<br>在这里我用的是xterm这个软件，里面默认保存的有我的服务器信息，直接双击打开就可以连接上服务器。</p>
+</li>
+<li><p>进入服务器之后，我首先使用<code>systemctl status shadowsocks</code>查看服务运行状况，虽然显示有几个密码或加密方式认证错误，但是很显然不是本次出现问题的原因。其他的并没有任何有用的信息，索性重启了一次shadowsocks服务<code>systemctl restart shadowsocks</code>，问题还是没有解决。</p>
+</li>
+<li><p>突然想到是不是服务器本身就不能访问Google，<code>ping www.google.com</code>测试了一下一切正常。</p>
+</li>
+<li><p>最后想到，既然服务器IP地址没问题，那么是不是端口被土蔷了呢？凑巧之前看到过一篇文章讲到现在great wall有的是通过封端口来进行限制的。所以我又<code>vim /etc/shadowsocks.json</code>编辑配置文件，修改了里面的端口，然后重启服务<code>systemctl restart shadowsocks</code>，最后千万不要忘了修改防火墙配置，将之前的端口去掉，然后加上修改后的端口。<br><code>firewall-cmd --zone=public --remove-port=xxxx/tcp --premanent</code><br><code>firewall-cmd --zone=public --add-port=xxxx/tcp --premanent</code><br><code>firewall-cmd --reload</code></p>
+</li>
+<li><p>做完以上的工作之后，又修改了一下本地shadowsocks软件的配置信息，重新启动系统代理，打开浏览器，输入<code>www.google.com.hk</code>发现已经一切正常了。然后改了一下手机上的配置信息，连接之后测试连接，也显示一切正常。到这里本次的内容已经全部完成。一切恢复正常。</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+
+<div>
+  
+</div>
+
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huppert.top/2019-03-07-linux-firewall的使用.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yupeng Cao">
+      <meta itemprop="description" content="得到的和想要的对不上号">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huppert's world">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019-03-07-linux-firewall的使用.html" class="post-title-link" itemprop="url">linux_firewall的使用</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-07 17:41:11 / 修改时间：21:28:41" itemprop="dateCreated datePublished" datetime="2019-03-07T17:41:11+08:00">2019-03-07</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>首先本篇介绍是基于centos7的系统环境，本来刚开始学习Linux防火墙的时候我还在学习iptables，但是后来发现centos7已经默认使用firewall来承担防火墙的功能，要知道本来centos6版本默认的防火墙还是iptables，在这里我也不想去评判firewall和iptables哪个更好用，但是既然centos7用了firewall，我就给大家简单介绍一下firewall的基本操作。</p>
+<p>firewall也就是防火墙，在Linux安全里面担负着至关重要的角色，可能我现在对与防火墙的配置还没有很深刻的理解，但是还是给大家简单介绍一下我眼中的防火墙的使用。</p>
+<p>可能刚接触Linux操作系统的人，或者刚开始用Linux操作系统作为服务器提供某些服务的人，如果遇到服务搭建完成但是自己去尝试访问却死活访问不到的时候，还在用最粗暴的办法来解决这个问题，也就是直接关掉防火墙，也就是<code>systemctl stop firewalld</code>，更有甚者，有些机灵的同学还加了一句<code>systemctl disable firewalld</code>来关掉firewalld服务的开机启动。（没错，你没看错，firewall在服务中的名字就是firewalld。如果操作系统中没有这个软件的话，安装的时候也是这个名字，也就是<code>yum -y install firewalld</code>）</p>
+<p>而firewall防火墙引入了一个信任级别的概念来管理与之相关联的连接与接口。</p>
+<p>他将不同的网络连接归类到不同的信任级别，Zone提供了以下几个级别：</p>
+<blockquote>
+<p>drop: 丢弃所有进入的包，而不给出任何响应<br>block: 拒绝所有外部发起的连接，允许内部发起的连接<br>public: 允许指定的进入连接<br>external: 同上，对伪装的进入连接，一般用于路由转发<br>dmz: 允许受限制的进入连接<br>work: 允许受信任的计算机被限制的进入连接，类似 workgroup<br>home: 同上，类似 homegroup<br>internal: 同上，范围针对所有互联网用户<br>trusted: 信任所有连接</p>
+</blockquote>
+<p>不多BB，接下来进入正题，firewall的基本操作。</p>
+<h1 id="firewall的使用方法"><a href="#firewall的使用方法" class="headerlink" title="firewall的使用方法"></a>firewall的使用方法</h1><h2 id="服务相关操作"><a href="#服务相关操作" class="headerlink" title="服务相关操作"></a>服务相关操作</h2><h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><code>systemctl start firewalld</code></p>
+<h4 id="停止"><a href="#停止" class="headerlink" title="停止"></a>停止</h4><p><code>systemctl stopfirewalld</code></p>
+<h4 id="开机启动"><a href="#开机启动" class="headerlink" title="开机启动"></a>开机启动</h4><p><code>systemctl enable firewalld</code></p>
+<h4 id="关闭开机启动"><a href="#关闭开机启动" class="headerlink" title="关闭开机启动"></a>关闭开机启动</h4><p><code>systemctl disable firewalld</code></p>
+<h4 id="查看状态"><a href="#查看状态" class="headerlink" title="查看状态"></a>查看状态</h4><p><code>systemctl status firewalld</code></p>
+<h2 id="查看规则"><a href="#查看规则" class="headerlink" title="查看规则"></a>查看规则</h2><p>####查看帮助信息<br><code>firewall-cmd --help</code></p>
+<h4 id="查看运行状态"><a href="#查看运行状态" class="headerlink" title="查看运行状态"></a>查看运行状态</h4><p><code>firewall-cmd --status</code></p>
+<h4 id="查看已被激活的zone信息"><a href="#查看已被激活的zone信息" class="headerlink" title="查看已被激活的zone信息"></a>查看已被激活的zone信息</h4><p><code>firewall-cmd --get-active-zones</code></p>
+<h4 id="查看指定接口的zone信息"><a href="#查看指定接口的zone信息" class="headerlink" title="查看指定接口的zone信息"></a>查看指定接口的zone信息</h4><p><code>firewall-cmd --get-zone-of-interface=eth0</code></p>
+<h4 id="查看指定级别的接口信息"><a href="#查看指定级别的接口信息" class="headerlink" title="查看指定级别的接口信息"></a>查看指定级别的接口信息</h4><p><code>firewall-cmd --zone=public --list-interfaces</code></p>
+<h4 id="查看指定级别的所有信息"><a href="#查看指定级别的所有信息" class="headerlink" title="查看指定级别的所有信息"></a>查看指定级别的所有信息</h4><p><code>firewall-cmd --zone=public --list-all</code></p>
+<h4 id="查看所有级别被允许的信息"><a href="#查看所有级别被允许的信息" class="headerlink" title="查看所有级别被允许的信息"></a>查看所有级别被允许的信息</h4><p><code>firewall-cmd --get-service</code></p>
+<h4 id="查看重启后所有zone中被允许的服务，即永久放行的服务"><a href="#查看重启后所有zone中被允许的服务，即永久放行的服务" class="headerlink" title="查看重启后所有zone中被允许的服务，即永久放行的服务"></a>查看重启后所有zone中被允许的服务，即永久放行的服务</h4><p><code>firewall-cmd --get-service --permanent</code></p>
+<h2 id="管理规则"><a href="#管理规则" class="headerlink" title="管理规则"></a>管理规则</h2><h4 id="更新规则，不重启服务（不会断掉正在连接的tcp会话）"><a href="#更新规则，不重启服务（不会断掉正在连接的tcp会话）" class="headerlink" title="更新规则，不重启服务（不会断掉正在连接的tcp会话）"></a>更新规则，不重启服务（不会断掉正在连接的tcp会话）</h4><p><code>firewall-cmd --reload</code></p>
+<h4 id="更新规则，重启服务（会断开tcp会话）"><a href="#更新规则，重启服务（会断开tcp会话）" class="headerlink" title="更新规则，重启服务（会断开tcp会话）"></a>更新规则，重启服务（会断开tcp会话）</h4><p><code>firewall-cmd --complete-reload</code></p>
+<h4 id="将某个接口添加至某信任级别，再永久生效，比如将eth0加入public"><a href="#将某个接口添加至某信任级别，再永久生效，比如将eth0加入public" class="headerlink" title="将某个接口添加至某信任级别，再永久生效，比如将eth0加入public"></a>将某个接口添加至某信任级别，再永久生效，比如将eth0加入public</h4><p><code>firewall-cmd --zone=public --add-interface=eth0 --permanent</code></p>
+<h4 id="设置public为默认的信任级别"><a href="#设置public为默认的信任级别" class="headerlink" title="设置public为默认的信任级别"></a>设置public为默认的信任级别</h4><p><code>firewall-cmd --set-default-zone=public</code></p>
+<h4 id="列出某zone（例如public）被允许的进入端口"><a href="#列出某zone（例如public）被允许的进入端口" class="headerlink" title="列出某zone（例如public）被允许的进入端口"></a>列出某zone（例如public）被允许的进入端口</h4><p><code>firewall-cmd --zone=public --list-ports</code></p>
+<h4 id="允许tcp或udp某-范围-端口至public级别，并永久生效"><a href="#允许tcp或udp某-范围-端口至public级别，并永久生效" class="headerlink" title="允许tcp或udp某[范围]端口至public级别，并永久生效"></a>允许tcp或udp某[范围]端口至public级别，并永久生效</h4><p><code>firewall-cmd --zone=public --add-port=8080/tcp --permanent</code><br><code>firewall-cmd --zone=public --add-port=6666-6677/udp --permanent</code></p>
+<h4 id="添加smtp服务到work-zone"><a href="#添加smtp服务到work-zone" class="headerlink" title="添加smtp服务到work zone"></a>添加smtp服务到work zone</h4><p><code>firewall-cmd --zone=work --add-service=smtp</code></p>
+<h4 id="从work-zone移除smtp服务"><a href="#从work-zone移除smtp服务" class="headerlink" title="从work zone移除smtp服务"></a>从work zone移除smtp服务</h4><p><code>firewall-cmd --zone=work --remove-service=smtp</code></p>
+<h4 id="IP地址伪装"><a href="#IP地址伪装" class="headerlink" title="IP地址伪装"></a>IP地址伪装</h4><blockquote>
+<p>此举启用区域的伪装功能。私有网络的地址将被隐藏并映射到一个公有IP。这是地址转换的一种形式，常用于路由。由于内核的限制，伪装功能仅可用于IPv4。</p>
+</blockquote>
+<h5 id="查看伪装"><a href="#查看伪装" class="headerlink" title="查看伪装"></a>查看伪装</h5><p><code>firewall-cmd --zone=external --query-masquerade</code></p>
+<p>#####打开伪装<br><code>firewall-cmd --zone=external --add-masquerade</code></p>
+<p>#####关闭伪装<br><code>firewall-cmd --zone=external --remove-masquerade</code></p>
+<h4 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h4><p><code>firewall-cmd [--zone=&lt;zone&gt;] --add-forward-port=port=&lt;port&gt;[-&lt;port&gt;]:proto=&lt;protocol&gt; { :toport=&lt;port&gt;[-&lt;port&gt;] | :toaddr=&lt;address&gt; | :toport=&lt;port&gt;[-&lt;port&gt;]:toaddr=&lt;address&gt; }</code></p>
+<h5 id="如果想要打开端口转发，首先要打开伪装"><a href="#如果想要打开端口转发，首先要打开伪装" class="headerlink" title="如果想要打开端口转发，首先要打开伪装"></a>如果想要打开端口转发，首先要打开伪装</h5><p><code>firewall-cmd --zone=external --add-masquerade</code></p>
+<h5 id="转发tcp-1111端口数据到2333端口，永久生效"><a href="#转发tcp-1111端口数据到2333端口，永久生效" class="headerlink" title="转发tcp 1111端口数据到2333端口，永久生效"></a>转发tcp 1111端口数据到2333端口，永久生效</h5><p><code>firewall-cmd --zone=external --add-forward-port=port=1111:proto=tcp:toport=2333 --permanent</code></p>
+<h5 id="转发tcp-1111端口数据到另一IP的1111端口，永久生效"><a href="#转发tcp-1111端口数据到另一IP的1111端口，永久生效" class="headerlink" title="转发tcp 1111端口数据到另一IP的1111端口，永久生效"></a>转发tcp 1111端口数据到另一IP的1111端口，永久生效</h5><p><code>firewall-cmd --zone=external --add-forward-port=port=1111:proto=tcp:toaddr=192.168.1.1 --permanent</code></p>
+<h5 id="转发tcp-1111端口数据到另一IP的2333端口，永久生效"><a href="#转发tcp-1111端口数据到另一IP的2333端口，永久生效" class="headerlink" title="转发tcp 1111端口数据到另一IP的2333端口，永久生效"></a>转发tcp 1111端口数据到另一IP的2333端口，永久生效</h5><p><code>firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=2055:toaddr=192.168.1.1 --permanent</code></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+
+<div>
+  
+</div>
+
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://huppert.top/2019-02-26-sudo权限的管理.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1670,7 +2060,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1685,7 +2075,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1724,7 +2116,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
@@ -1811,7 +2211,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">本博客全站共有4.7k字，每个字都是作者的心血</span>
+  <span class="post-count">本博客全站共有6.7k字，每个字都是作者的心血</span>
 </div>
 
         

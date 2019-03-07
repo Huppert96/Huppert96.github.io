@@ -107,27 +107,25 @@
 
 
 
-  <meta name="description" content="背景介绍相信很多小伙伴都遇到过Ubuntu系统丢失引导的问题。这个问题之所以会出现一般有一下几点：  安装完Ubuntu系统之后又安装Windows系统，导致Windows系统引导覆盖掉了Ubuntu系统的引导。 安装好系统之后不小心动到了安装引导的分区，导致引导丢失。 电脑操作系统出现问题的情况千千万万，数不胜数，就不一一列举。  解决办法 首先你要有一个Ubuntu的系统盘，不过既然你已经安装">
-<meta name="keywords" content="Ubuntu,装机,双系统">
+  <meta name="description" content="介绍首先本篇介绍是基于centos7的系统环境，本来刚开始学习Linux防火墙的时候我还在学习iptables，但是后来发现centos7已经默认使用firewall来承担防火墙的功能，要知道本来centos6版本默认的防火墙还是iptables，在这里我也不想去评判firewall和iptables哪个更好用，但是既然centos7用了firewall，我就给大家简单介绍一下firewall的基">
+<meta name="keywords" content="linux,安全,防火墙">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ubuntu重做引导">
-<meta property="og:url" content="http://huppert.top/2019-02-25-ubuntu重做引导.html">
+<meta property="og:title" content="linux_firewall的使用">
+<meta property="og:url" content="http://huppert.top/2019-03-07-linux-firewall的使用.html">
 <meta property="og:site_name" content="Huppert&#39;s world">
-<meta property="og:description" content="背景介绍相信很多小伙伴都遇到过Ubuntu系统丢失引导的问题。这个问题之所以会出现一般有一下几点：  安装完Ubuntu系统之后又安装Windows系统，导致Windows系统引导覆盖掉了Ubuntu系统的引导。 安装好系统之后不小心动到了安装引导的分区，导致引导丢失。 电脑操作系统出现问题的情况千千万万，数不胜数，就不一一列举。  解决办法 首先你要有一个Ubuntu的系统盘，不过既然你已经安装">
+<meta property="og:description" content="介绍首先本篇介绍是基于centos7的系统环境，本来刚开始学习Linux防火墙的时候我还在学习iptables，但是后来发现centos7已经默认使用firewall来承担防火墙的功能，要知道本来centos6版本默认的防火墙还是iptables，在这里我也不想去评判firewall和iptables哪个更好用，但是既然centos7用了firewall，我就给大家简单介绍一下firewall的基">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://huppert.top/images/ubuntu分区.png">
-<meta property="og:updated_time" content="2019-02-25T05:23:07.255Z">
+<meta property="og:updated_time" content="2019-03-07T13:28:41.810Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu重做引导">
-<meta name="twitter:description" content="背景介绍相信很多小伙伴都遇到过Ubuntu系统丢失引导的问题。这个问题之所以会出现一般有一下几点：  安装完Ubuntu系统之后又安装Windows系统，导致Windows系统引导覆盖掉了Ubuntu系统的引导。 安装好系统之后不小心动到了安装引导的分区，导致引导丢失。 电脑操作系统出现问题的情况千千万万，数不胜数，就不一一列举。  解决办法 首先你要有一个Ubuntu的系统盘，不过既然你已经安装">
-<meta name="twitter:image" content="http://huppert.top/images/ubuntu分区.png">
+<meta name="twitter:title" content="linux_firewall的使用">
+<meta name="twitter:description" content="介绍首先本篇介绍是基于centos7的系统环境，本来刚开始学习Linux防火墙的时候我还在学习iptables，但是后来发现centos7已经默认使用firewall来承担防火墙的功能，要知道本来centos6版本默认的防火墙还是iptables，在这里我也不想去评判firewall和iptables哪个更好用，但是既然centos7用了firewall，我就给大家简单介绍一下firewall的基">
 
 
 
 
 
 
-  <link rel="canonical" href="http://huppert.top/2019-02-25-ubuntu重做引导.html">
+  <link rel="canonical" href="http://huppert.top/2019-03-07-linux-firewall的使用.html">
 
 
 
@@ -137,7 +135,7 @@
   };
 </script>
 
-  <title>ubuntu重做引导 | Huppert's world</title>
+  <title>linux_firewall的使用 | Huppert's world</title>
   
 
 
@@ -354,7 +352,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huppert.top/2019-02-25-ubuntu重做引导.html">
+    <link itemprop="mainEntityOfPage" href="http://huppert.top/2019-03-07-linux-firewall的使用.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yupeng Cao">
@@ -371,7 +369,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ubuntu重做引导
+          <h1 class="post-title" itemprop="name headline">linux_firewall的使用
 
               
             
@@ -397,7 +395,7 @@
                 
               
 
-              <time title="创建时间：2019-02-25 12:37:26 / 修改时间：13:23:07" itemprop="dateCreated datePublished" datetime="2019-02-25T12:37:26+08:00">2019-02-25</time>
+              <time title="创建时间：2019-03-07 17:41:11 / 修改时间：21:28:41" itemprop="dateCreated datePublished" datetime="2019-03-07T17:41:11+08:00">2019-03-07</time>
             
 
             
@@ -454,38 +452,47 @@
       
 
       
-        <h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>相信很多小伙伴都遇到过Ubuntu系统丢失引导的问题。这个问题之所以会出现一般有一下几点：</p>
-<ol>
-<li>安装完Ubuntu系统之后又安装Windows系统，导致Windows系统引导覆盖掉了Ubuntu系统的引导。</li>
-<li>安装好系统之后不小心动到了安装引导的分区，导致引导丢失。</li>
-<li>电脑操作系统出现问题的情况千千万万，数不胜数，就不一一列举。</li>
-</ol>
-<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><ol>
-<li><p>首先你要有一个Ubuntu的系统盘，不过既然你已经安装了Ubuntu系统，系统盘应该是有的。</p>
-</li>
-<li><p>通过系统盘启动，选择试用系统。</p>
-</li>
-<li><p>打开终端，可以桌面右键然后选择终端，也可以ctrl+alt+T快捷键打开。</p>
-</li>
-<li><p><code>sudo -i</code>切换至root用户。</p>
-</li>
-<li><p><code>fdisk -l</code>查看自己系统目前的分区状况。</p>
-<p><img src="/images/ubuntu分区.png" alt="分区状况"></p>
-<p>由图可见Ubuntu分区是有很明确的分区描述的，只需通过分区大小确定你的根目录所在分区，然后在第7步挂载你的根目录所在分区即可。</p>
-</li>
-<li><p><code>mkdir /media/ubuntu</code>创建一个文件夹用来挂载Ubuntu系统，可以不必一定创建这个目录。</p>
-</li>
-<li><p><code>mount /dev/sda4 /media/ubuntu</code>挂载Ubuntu系统到这个目录下。/dev/sda4即第5步所看到的Ubuntu系统所在的分区。<br>挂载完成之后可以<code>ls /media/ubuntu</code>查看一下，确保挂载的为根目录，而不是/home目录或其他目录。</p>
-</li>
-<li><p><code>grub-install --root-directory=/media/ubuntu /dev/sda</code> 修复grub引导。</p>
-</li>
-<li><p>此时你的Ubuntu系统的引导已经修复完成，重启系统即可直接进入Ubuntu系统。</p>
-</li>
-<li><p>如果你安装的还有Windows系统的话，这时你在grub界面已经看不到你的Windows系统的引导选项了。</p>
-<p>这是因为刚才修复的Ubuntu系统的引导已经将其覆盖掉了。</p>
-<p>修复引导很简单，进入系统以后打开终端输入<code>sudo update-grub</code>即可。</p>
-</li>
-</ol>
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>首先本篇介绍是基于centos7的系统环境，本来刚开始学习Linux防火墙的时候我还在学习iptables，但是后来发现centos7已经默认使用firewall来承担防火墙的功能，要知道本来centos6版本默认的防火墙还是iptables，在这里我也不想去评判firewall和iptables哪个更好用，但是既然centos7用了firewall，我就给大家简单介绍一下firewall的基本操作。</p>
+<p>firewall也就是防火墙，在Linux安全里面担负着至关重要的角色，可能我现在对与防火墙的配置还没有很深刻的理解，但是还是给大家简单介绍一下我眼中的防火墙的使用。</p>
+<p>可能刚接触Linux操作系统的人，或者刚开始用Linux操作系统作为服务器提供某些服务的人，如果遇到服务搭建完成但是自己去尝试访问却死活访问不到的时候，还在用最粗暴的办法来解决这个问题，也就是直接关掉防火墙，也就是<code>systemctl stop firewalld</code>，更有甚者，有些机灵的同学还加了一句<code>systemctl disable firewalld</code>来关掉firewalld服务的开机启动。（没错，你没看错，firewall在服务中的名字就是firewalld。如果操作系统中没有这个软件的话，安装的时候也是这个名字，也就是<code>yum -y install firewalld</code>）</p>
+<p>而firewall防火墙引入了一个信任级别的概念来管理与之相关联的连接与接口。</p>
+<p>他将不同的网络连接归类到不同的信任级别，Zone提供了以下几个级别：</p>
+<blockquote>
+<p>drop: 丢弃所有进入的包，而不给出任何响应<br>block: 拒绝所有外部发起的连接，允许内部发起的连接<br>public: 允许指定的进入连接<br>external: 同上，对伪装的进入连接，一般用于路由转发<br>dmz: 允许受限制的进入连接<br>work: 允许受信任的计算机被限制的进入连接，类似 workgroup<br>home: 同上，类似 homegroup<br>internal: 同上，范围针对所有互联网用户<br>trusted: 信任所有连接</p>
+</blockquote>
+<p>不多BB，接下来进入正题，firewall的基本操作。</p>
+<h1 id="firewall的使用方法"><a href="#firewall的使用方法" class="headerlink" title="firewall的使用方法"></a>firewall的使用方法</h1><h2 id="服务相关操作"><a href="#服务相关操作" class="headerlink" title="服务相关操作"></a>服务相关操作</h2><h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><code>systemctl start firewalld</code></p>
+<h4 id="停止"><a href="#停止" class="headerlink" title="停止"></a>停止</h4><p><code>systemctl stopfirewalld</code></p>
+<h4 id="开机启动"><a href="#开机启动" class="headerlink" title="开机启动"></a>开机启动</h4><p><code>systemctl enable firewalld</code></p>
+<h4 id="关闭开机启动"><a href="#关闭开机启动" class="headerlink" title="关闭开机启动"></a>关闭开机启动</h4><p><code>systemctl disable firewalld</code></p>
+<h4 id="查看状态"><a href="#查看状态" class="headerlink" title="查看状态"></a>查看状态</h4><p><code>systemctl status firewalld</code></p>
+<h2 id="查看规则"><a href="#查看规则" class="headerlink" title="查看规则"></a>查看规则</h2><p>####查看帮助信息<br><code>firewall-cmd --help</code></p>
+<h4 id="查看运行状态"><a href="#查看运行状态" class="headerlink" title="查看运行状态"></a>查看运行状态</h4><p><code>firewall-cmd --status</code></p>
+<h4 id="查看已被激活的zone信息"><a href="#查看已被激活的zone信息" class="headerlink" title="查看已被激活的zone信息"></a>查看已被激活的zone信息</h4><p><code>firewall-cmd --get-active-zones</code></p>
+<h4 id="查看指定接口的zone信息"><a href="#查看指定接口的zone信息" class="headerlink" title="查看指定接口的zone信息"></a>查看指定接口的zone信息</h4><p><code>firewall-cmd --get-zone-of-interface=eth0</code></p>
+<h4 id="查看指定级别的接口信息"><a href="#查看指定级别的接口信息" class="headerlink" title="查看指定级别的接口信息"></a>查看指定级别的接口信息</h4><p><code>firewall-cmd --zone=public --list-interfaces</code></p>
+<h4 id="查看指定级别的所有信息"><a href="#查看指定级别的所有信息" class="headerlink" title="查看指定级别的所有信息"></a>查看指定级别的所有信息</h4><p><code>firewall-cmd --zone=public --list-all</code></p>
+<h4 id="查看所有级别被允许的信息"><a href="#查看所有级别被允许的信息" class="headerlink" title="查看所有级别被允许的信息"></a>查看所有级别被允许的信息</h4><p><code>firewall-cmd --get-service</code></p>
+<h4 id="查看重启后所有zone中被允许的服务，即永久放行的服务"><a href="#查看重启后所有zone中被允许的服务，即永久放行的服务" class="headerlink" title="查看重启后所有zone中被允许的服务，即永久放行的服务"></a>查看重启后所有zone中被允许的服务，即永久放行的服务</h4><p><code>firewall-cmd --get-service --permanent</code></p>
+<h2 id="管理规则"><a href="#管理规则" class="headerlink" title="管理规则"></a>管理规则</h2><h4 id="更新规则，不重启服务（不会断掉正在连接的tcp会话）"><a href="#更新规则，不重启服务（不会断掉正在连接的tcp会话）" class="headerlink" title="更新规则，不重启服务（不会断掉正在连接的tcp会话）"></a>更新规则，不重启服务（不会断掉正在连接的tcp会话）</h4><p><code>firewall-cmd --reload</code></p>
+<h4 id="更新规则，重启服务（会断开tcp会话）"><a href="#更新规则，重启服务（会断开tcp会话）" class="headerlink" title="更新规则，重启服务（会断开tcp会话）"></a>更新规则，重启服务（会断开tcp会话）</h4><p><code>firewall-cmd --complete-reload</code></p>
+<h4 id="将某个接口添加至某信任级别，再永久生效，比如将eth0加入public"><a href="#将某个接口添加至某信任级别，再永久生效，比如将eth0加入public" class="headerlink" title="将某个接口添加至某信任级别，再永久生效，比如将eth0加入public"></a>将某个接口添加至某信任级别，再永久生效，比如将eth0加入public</h4><p><code>firewall-cmd --zone=public --add-interface=eth0 --permanent</code></p>
+<h4 id="设置public为默认的信任级别"><a href="#设置public为默认的信任级别" class="headerlink" title="设置public为默认的信任级别"></a>设置public为默认的信任级别</h4><p><code>firewall-cmd --set-default-zone=public</code></p>
+<h4 id="列出某zone（例如public）被允许的进入端口"><a href="#列出某zone（例如public）被允许的进入端口" class="headerlink" title="列出某zone（例如public）被允许的进入端口"></a>列出某zone（例如public）被允许的进入端口</h4><p><code>firewall-cmd --zone=public --list-ports</code></p>
+<h4 id="允许tcp或udp某-范围-端口至public级别，并永久生效"><a href="#允许tcp或udp某-范围-端口至public级别，并永久生效" class="headerlink" title="允许tcp或udp某[范围]端口至public级别，并永久生效"></a>允许tcp或udp某[范围]端口至public级别，并永久生效</h4><p><code>firewall-cmd --zone=public --add-port=8080/tcp --permanent</code><br><code>firewall-cmd --zone=public --add-port=6666-6677/udp --permanent</code></p>
+<h4 id="添加smtp服务到work-zone"><a href="#添加smtp服务到work-zone" class="headerlink" title="添加smtp服务到work zone"></a>添加smtp服务到work zone</h4><p><code>firewall-cmd --zone=work --add-service=smtp</code></p>
+<h4 id="从work-zone移除smtp服务"><a href="#从work-zone移除smtp服务" class="headerlink" title="从work zone移除smtp服务"></a>从work zone移除smtp服务</h4><p><code>firewall-cmd --zone=work --remove-service=smtp</code></p>
+<h4 id="IP地址伪装"><a href="#IP地址伪装" class="headerlink" title="IP地址伪装"></a>IP地址伪装</h4><blockquote>
+<p>此举启用区域的伪装功能。私有网络的地址将被隐藏并映射到一个公有IP。这是地址转换的一种形式，常用于路由。由于内核的限制，伪装功能仅可用于IPv4。</p>
+</blockquote>
+<h5 id="查看伪装"><a href="#查看伪装" class="headerlink" title="查看伪装"></a>查看伪装</h5><p><code>firewall-cmd --zone=external --query-masquerade</code></p>
+<p>#####打开伪装<br><code>firewall-cmd --zone=external --add-masquerade</code></p>
+<p>#####关闭伪装<br><code>firewall-cmd --zone=external --remove-masquerade</code></p>
+<h4 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h4><p><code>firewall-cmd [--zone=&lt;zone&gt;] --add-forward-port=port=&lt;port&gt;[-&lt;port&gt;]:proto=&lt;protocol&gt; { :toport=&lt;port&gt;[-&lt;port&gt;] | :toaddr=&lt;address&gt; | :toport=&lt;port&gt;[-&lt;port&gt;]:toaddr=&lt;address&gt; }</code></p>
+<h5 id="如果想要打开端口转发，首先要打开伪装"><a href="#如果想要打开端口转发，首先要打开伪装" class="headerlink" title="如果想要打开端口转发，首先要打开伪装"></a>如果想要打开端口转发，首先要打开伪装</h5><p><code>firewall-cmd --zone=external --add-masquerade</code></p>
+<h5 id="转发tcp-1111端口数据到2333端口，永久生效"><a href="#转发tcp-1111端口数据到2333端口，永久生效" class="headerlink" title="转发tcp 1111端口数据到2333端口，永久生效"></a>转发tcp 1111端口数据到2333端口，永久生效</h5><p><code>firewall-cmd --zone=external --add-forward-port=port=1111:proto=tcp:toport=2333 --permanent</code></p>
+<h5 id="转发tcp-1111端口数据到另一IP的1111端口，永久生效"><a href="#转发tcp-1111端口数据到另一IP的1111端口，永久生效" class="headerlink" title="转发tcp 1111端口数据到另一IP的1111端口，永久生效"></a>转发tcp 1111端口数据到另一IP的1111端口，永久生效</h5><p><code>firewall-cmd --zone=external --add-forward-port=port=1111:proto=tcp:toaddr=192.168.1.1 --permanent</code></p>
+<h5 id="转发tcp-1111端口数据到另一IP的2333端口，永久生效"><a href="#转发tcp-1111端口数据到另一IP的2333端口，永久生效" class="headerlink" title="转发tcp 1111端口数据到另一IP的2333端口，永久生效"></a>转发tcp 1111端口数据到另一IP的2333端口，永久生效</h5><p><code>firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=2055:toaddr=192.168.1.1 --permanent</code></p>
 
       
     </div>
@@ -522,11 +529,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Ubuntu/" rel="tag"><i class="fa fa-tag"></i> Ubuntu</a>
+            <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
           
-            <a href="/tags/装机/" rel="tag"><i class="fa fa-tag"></i> 装机</a>
+            <a href="/tags/安全/" rel="tag"><i class="fa fa-tag"></i> 安全</a>
           
-            <a href="/tags/双系统/" rel="tag"><i class="fa fa-tag"></i> 双系统</a>
+            <a href="/tags/防火墙/" rel="tag"><i class="fa fa-tag"></i> 防火墙</a>
           
         </div>
       
@@ -599,8 +606,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019-02-25-windows-server限制2人连接.html" rel="next" title="windows_server限制2人连接">
-                <i class="fa fa-chevron-left"></i> windows_server限制2人连接
+              <a href="/2019-02-26-sudo权限的管理.html" rel="next" title="sudo权限的管理">
+                <i class="fa fa-chevron-left"></i> sudo权限的管理
               </a>
             
           </div>
@@ -609,8 +616,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019-02-25-ubuntu使用LVM时遇到的问题及基本操作.html" rel="prev" title="ubuntu使用LVM时遇到的问题及基本操作">
-                ubuntu使用LVM时遇到的问题及基本操作 <i class="fa fa-chevron-right"></i>
+              <a href="/2019-03-07-ss-first出问题的排查思路和解决方案.html" rel="prev" title="ss_first出问题的排查思路和解决方案">
+                ss_first出问题的排查思路和解决方案 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -811,7 +818,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景介绍"><span class="nav-number">1.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决办法"><span class="nav-number">2.</span> <span class="nav-text">解决办法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#firewall的使用方法"><span class="nav-number">2.</span> <span class="nav-text">firewall的使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务相关操作"><span class="nav-number">2.1.</span> <span class="nav-text">服务相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#启动"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#停止"><span class="nav-number">2.1.0.2.</span> <span class="nav-text">停止</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开机启动"><span class="nav-number">2.1.0.3.</span> <span class="nav-text">开机启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭开机启动"><span class="nav-number">2.1.0.4.</span> <span class="nav-text">关闭开机启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看状态"><span class="nav-number">2.1.0.5.</span> <span class="nav-text">查看状态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看规则"><span class="nav-number">2.2.</span> <span class="nav-text">查看规则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看运行状态"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">查看运行状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看已被激活的zone信息"><span class="nav-number">2.2.0.2.</span> <span class="nav-text">查看已被激活的zone信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看指定接口的zone信息"><span class="nav-number">2.2.0.3.</span> <span class="nav-text">查看指定接口的zone信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看指定级别的接口信息"><span class="nav-number">2.2.0.4.</span> <span class="nav-text">查看指定级别的接口信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看指定级别的所有信息"><span class="nav-number">2.2.0.5.</span> <span class="nav-text">查看指定级别的所有信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看所有级别被允许的信息"><span class="nav-number">2.2.0.6.</span> <span class="nav-text">查看所有级别被允许的信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看重启后所有zone中被允许的服务，即永久放行的服务"><span class="nav-number">2.2.0.7.</span> <span class="nav-text">查看重启后所有zone中被允许的服务，即永久放行的服务</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#管理规则"><span class="nav-number">2.3.</span> <span class="nav-text">管理规则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#更新规则，不重启服务（不会断掉正在连接的tcp会话）"><span class="nav-number">2.3.0.1.</span> <span class="nav-text">更新规则，不重启服务（不会断掉正在连接的tcp会话）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新规则，重启服务（会断开tcp会话）"><span class="nav-number">2.3.0.2.</span> <span class="nav-text">更新规则，重启服务（会断开tcp会话）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将某个接口添加至某信任级别，再永久生效，比如将eth0加入public"><span class="nav-number">2.3.0.3.</span> <span class="nav-text">将某个接口添加至某信任级别，再永久生效，比如将eth0加入public</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置public为默认的信任级别"><span class="nav-number">2.3.0.4.</span> <span class="nav-text">设置public为默认的信任级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#列出某zone（例如public）被允许的进入端口"><span class="nav-number">2.3.0.5.</span> <span class="nav-text">列出某zone（例如public）被允许的进入端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#允许tcp或udp某-范围-端口至public级别，并永久生效"><span class="nav-number">2.3.0.6.</span> <span class="nav-text">允许tcp或udp某[范围]端口至public级别，并永久生效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加smtp服务到work-zone"><span class="nav-number">2.3.0.7.</span> <span class="nav-text">添加smtp服务到work zone</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从work-zone移除smtp服务"><span class="nav-number">2.3.0.8.</span> <span class="nav-text">从work zone移除smtp服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IP地址伪装"><span class="nav-number">2.3.0.9.</span> <span class="nav-text">IP地址伪装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看伪装"><span class="nav-number">2.3.0.9.1.</span> <span class="nav-text">查看伪装</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#端口转发"><span class="nav-number">2.3.0.10.</span> <span class="nav-text">端口转发</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果想要打开端口转发，首先要打开伪装"><span class="nav-number">2.3.0.10.1.</span> <span class="nav-text">如果想要打开端口转发，首先要打开伪装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#转发tcp-1111端口数据到2333端口，永久生效"><span class="nav-number">2.3.0.10.2.</span> <span class="nav-text">转发tcp 1111端口数据到2333端口，永久生效</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#转发tcp-1111端口数据到另一IP的1111端口，永久生效"><span class="nav-number">2.3.0.10.3.</span> <span class="nav-text">转发tcp 1111端口数据到另一IP的1111端口，永久生效</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#转发tcp-1111端口数据到另一IP的2333端口，永久生效"><span class="nav-number">2.3.0.10.4.</span> <span class="nav-text">转发tcp 1111端口数据到另一IP的2333端口，永久生效</span></a></li></ol></li></ol></li></div>
             
 
           </div>
