@@ -107,25 +107,36 @@
 
 
 
-  <meta name="description" content="背景介绍前一段时间在公司实习的时候公司服务器磁盘管理严重不规范，并且一台服务器上有很多块磁盘，大小也不一样，有的磁盘使用率接近100%。有的磁盘使用率却只有不到20%，所以我就决定给磁盘做一下LVM，重新分区，然后再根据使用状况将不同的目录挂载到不同的分区。期间遇到了一些问题，趁着这次整理blog顺便将LVM的命令和遇到的问题整理一下大家一起学习。 什么是lvmLVM是逻辑盘卷管理（Logical">
-<meta name="keywords" content="Ubuntu,LVM">
+  <meta name="description" content="#zabbix agent的搭建 zabbix agent也就是通过master-agent方式监控主机，配置agent的代理端也就是被监控服务器。如果zabbix server也需要被监控就也需要安装zabbix agent。zabbix agent的端口号为10050  自动生成zabbix的yum源，这一步需要系统有公网环境rpm -ivh http://repo.zabbix.com/za">
+<meta name="keywords" content="centos,运维,zabbix">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ubuntu使用LVM时遇到的问题及基本操作">
-<meta property="og:url" content="http://huppert.top/2019-02-25-ubuntu使用LVM时遇到的问题及基本操作.html">
+<meta property="og:title" content="centos7搭建ZabbixAgent">
+<meta property="og:url" content="http://huppert.top/2019-03-15-centos7搭建ZabbixAgent.html">
 <meta property="og:site_name" content="Huppert&#39;s world">
-<meta property="og:description" content="背景介绍前一段时间在公司实习的时候公司服务器磁盘管理严重不规范，并且一台服务器上有很多块磁盘，大小也不一样，有的磁盘使用率接近100%。有的磁盘使用率却只有不到20%，所以我就决定给磁盘做一下LVM，重新分区，然后再根据使用状况将不同的目录挂载到不同的分区。期间遇到了一些问题，趁着这次整理blog顺便将LVM的命令和遇到的问题整理一下大家一起学习。 什么是lvmLVM是逻辑盘卷管理（Logical">
+<meta property="og:description" content="#zabbix agent的搭建 zabbix agent也就是通过master-agent方式监控主机，配置agent的代理端也就是被监控服务器。如果zabbix server也需要被监控就也需要安装zabbix agent。zabbix agent的端口号为10050  自动生成zabbix的yum源，这一步需要系统有公网环境rpm -ivh http://repo.zabbix.com/za">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-26T03:49:19.054Z">
+<meta property="og:image" content="http://huppert.top/images/agent1">
+<meta property="og:image" content="http://huppert.top/images/agent2">
+<meta property="og:image" content="http://huppert.top/images/agent3">
+<meta property="og:image" content="http://huppert.top/images/agent4">
+<meta property="og:image" content="http://huppert.top/images/agent5">
+<meta property="og:image" content="http://huppert.top/images/agent6">
+<meta property="og:image" content="http://huppert.top/images/agent7">
+<meta property="og:image" content="http://huppert.top/images/agent8">
+<meta property="og:image" content="http://huppert.top/images/agent9">
+<meta property="og:image" content="http://huppert.top/images/agent10">
+<meta property="og:updated_time" content="2019-03-15T08:11:16.288Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu使用LVM时遇到的问题及基本操作">
-<meta name="twitter:description" content="背景介绍前一段时间在公司实习的时候公司服务器磁盘管理严重不规范，并且一台服务器上有很多块磁盘，大小也不一样，有的磁盘使用率接近100%。有的磁盘使用率却只有不到20%，所以我就决定给磁盘做一下LVM，重新分区，然后再根据使用状况将不同的目录挂载到不同的分区。期间遇到了一些问题，趁着这次整理blog顺便将LVM的命令和遇到的问题整理一下大家一起学习。 什么是lvmLVM是逻辑盘卷管理（Logical">
+<meta name="twitter:title" content="centos7搭建ZabbixAgent">
+<meta name="twitter:description" content="#zabbix agent的搭建 zabbix agent也就是通过master-agent方式监控主机，配置agent的代理端也就是被监控服务器。如果zabbix server也需要被监控就也需要安装zabbix agent。zabbix agent的端口号为10050  自动生成zabbix的yum源，这一步需要系统有公网环境rpm -ivh http://repo.zabbix.com/za">
+<meta name="twitter:image" content="http://huppert.top/images/agent1">
 
 
 
 
 
 
-  <link rel="canonical" href="http://huppert.top/2019-02-25-ubuntu使用LVM时遇到的问题及基本操作.html">
+  <link rel="canonical" href="http://huppert.top/2019-03-15-centos7搭建ZabbixAgent.html">
 
 
 
@@ -135,7 +146,7 @@
   };
 </script>
 
-  <title>ubuntu使用LVM时遇到的问题及基本操作 | Huppert's world</title>
+  <title>centos7搭建ZabbixAgent | Huppert's world</title>
   
 
 
@@ -352,7 +363,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huppert.top/2019-02-25-ubuntu使用LVM时遇到的问题及基本操作.html">
+    <link itemprop="mainEntityOfPage" href="http://huppert.top/2019-03-15-centos7搭建ZabbixAgent.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yupeng Cao">
@@ -369,7 +380,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ubuntu使用LVM时遇到的问题及基本操作
+          <h1 class="post-title" itemprop="name headline">centos7搭建ZabbixAgent
 
               
             
@@ -395,24 +406,12 @@
                 
               
 
-              <time title="创建时间：2019-02-25 21:07:07" itemprop="dateCreated datePublished" datetime="2019-02-25T21:07:07+08:00">2019-02-25</time>
+              <time title="创建时间：2019-03-15 15:33:08 / 修改时间：16:11:16" itemprop="dateCreated datePublished" datetime="2019-03-15T15:33:08+08:00">2019-03-15</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-02-26 11:49:19" itemprop="dateModified" datetime="2019-02-26T11:49:19+08:00">2019-02-26</time>
               
             
           </span>
@@ -464,22 +463,27 @@
       
 
       
-        <h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>前一段时间在公司实习的时候公司服务器磁盘管理严重不规范，并且一台服务器上有很多块磁盘，大小也不一样，有的磁盘使用率接近100%。有的磁盘使用率却只有不到20%，所以我就决定给磁盘做一下LVM，重新分区，然后再根据使用状况将不同的目录挂载到不同的分区。期间遇到了一些问题，趁着这次整理blog顺便将LVM的命令和遇到的问题整理一下大家一起学习。</p>
-<h1 id="什么是lvm"><a href="#什么是lvm" class="headerlink" title="什么是lvm"></a>什么是lvm</h1><p>LVM是逻辑盘卷管理（Logical Volume Manager）的简称,它是一种磁盘管理工具，他的重点在于可以弹性的调整filesystem的容量，而且可以将多个实体的磁盘整合到一起，使其变成一个磁盘，还可以在以后继续往LVM管理的磁盘中添加或者删除实体磁盘。<br>LVM中有几个名词需要理解一下：</p>
-<ul>
-<li>PV（Physical Volume）实体卷轴</li>
-<li>VG（Volume Group）卷轴群组</li>
-<li>PE（Physical Extent）实体范围区块</li>
-<li>LV（Logical Volume）逻辑卷轴<h1 id="LVM的使用"><a href="#LVM的使用" class="headerlink" title="LVM的使用"></a>LVM的使用</h1></li>
-</ul>
+        <p>#zabbix agent的搭建</p>
+<p>zabbix agent也就是通过master-agent方式监控主机，配置agent的代理端也就是被监控服务器。<br>如果zabbix server也需要被监控就也需要安装zabbix agent。<br>zabbix agent的端口号为<strong>10050</strong></p>
 <ol>
-<li>首先需要安装一下lvm这个软件<br><code>sudo apt-get install lvm2</code></li>
-<li>安装完之后首先将想要添加到LVM卷的磁盘转换磁盘ID，转换为Linux LVM<br><code>fdisk /dev/sda</code></li>
-<li>格式化想要添加到LVM中的分区，并挂载到系统当中<br><code>mkfs.ext4</code> 或者 <code>mkfs.xfs</code>格式化,然后<code>mount</code>挂载</li>
-<li>PV阶段<br>4.1 将磁盘创建为PV<br><code>pvcreate /dev/sda1</code><br>4.2 查看当前系统中已经转化为PV的磁盘<br><code>pvscan</code><br>4.3 为显示某一个pv的详细信息<br><code>pvdisplay /dev/sda1</code><br>4.4 为将该分区移除pv属性<br><code>pvremove /dev/sda</code></li>
-<li>VG阶段<br>5.1 创建VG<br><code>vgcreate [-s N[mgt]] VG名称 PV名称</code><br>PS：-s后接的是PE的大小，单位为m，g，t（不区分大小写）<br>5.2 查看系统上所有的VG<br><code>vgscan</code><br>5.3 显示某一个VG的详细信息<br><code>vgdisplay VG名称</code><br>5.4 在VG中增加额外的PV<br><code>vgextend VG名称 PV名称</code><br>5.5 从VG中移除PV<br><code>vgreduce VG名称 PV名称</code><br>5.6 删除VG<br><code>vgremove VG名称</code></li>
-<li>LV阶段<br>6.1 创建LV<br><code>lvcreate [-L N[mgt]] [-n LV名称 ] VG名称</code><br><code>lvcreate [-l N] [-n LV名称 ] VG名称</code><br>PS:创建LV有两种方式，一种是以容量为单位，即-L，因为LVM中容量的最小单位为PE，所以—L后面的数量必须  是PE的倍数，如果不是，系统会自动计算相近的容量。另一种是以PE的个数为单位，如果这么做，需要计算PE  的 数量，不过可以通过  <code>vgdisplay VG名称</code>  来查看一个VG中总共有多少个PE，已用多少，可用多少。<br>6.2 查询系统上的LV<br><code>lvscan</code><br>6.3 显示某一个LV的详细信息<br><code>lvdisplay LV全名</code><br>6.4 扩展LV的容量<br><code>lvextend -L +N[mgt] LV全名</code><br>6.5 减少LV的容量<br><code>lvreduce -L -N[mgt] LV全名</code><br>6.6 改变LV的容量<br><code>lvresize -L [+/-]N[mgt] LV全名</code><br>例如：<br>增加20G<code>lvresize -L +20G LV全名</code><br>或减小20G<code>lvresize -L -20G LV全名</code><br>或增大或减小到20G<code>lvresize  -L 20G LV全名</code><br>6.7 删除LV<br><code>lvremove LV全名</code><br>6.8 注意事项<br>LV的全名为<code>/dev/VG名称/LV名称</code><br>LV设置完成之后需要格式化并挂载才能使用，挂载之后LV为<code>/dev/mapper/VG名称-LV名称</code><br>我们linux使用的并不是LV，而是LV设备内的文件系统，目前只有XFS和EXT家族可以放大容量，只有EXT家族可  以缩小容量<br>改变LV容量之后想要生效需要执行<code>resize2fs LV全名</code></li>
-<li>安装完lvm2之后使用lvm的相关命令是发现有错误，这是因为lvm的相关服务并没有开启，执行以下命令即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable lvm2-lvmetad.service</span><br><span class="line">systemctl enable lvm2-lvmetad.socket</span><br><span class="line">systemctl start lvm2-lvmetad.service</span><br><span class="line">systemctl start lvm2-lvmetad.socket</span><br></pre></td></tr></table></figure>
+<li><p>自动生成zabbix的yum源，这一步需要系统有公网环境<br><code>rpm -ivh http://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm</code></p>
+</li>
+<li><p>安装zabbix agent软件<br><code>yum install -y zabbix-agent</code></p>
+</li>
+<li><p>配置zabbix agent，修改如下内容<br><code>vim /etc/zabbix/zabbix_agentd.conf</code></p>
+<blockquote>
+<p>Server=172.18.20.224 &emsp;&emsp;&emsp; # zabbix server服务器的IP<br>ServerActive=172.18.20.224 &emsp;&emsp;&emsp; # zabbix server服务器的IP<br>Hostname=zabbix-agent &emsp;&emsp;&emsp; # 要与zabbix server的web端上添加的主机名一致</p>
+</blockquote>
+</li>
+<li><p>关闭selinux<br><code>vim /etc/selinux/config</code>&emsp;&emsp;&emsp;&emsp;#将SELINUX=enforcing改为SELINUX=disabled 设置后需要重启才能生效<br><code>setenforce 0</code>&emsp;&emsp;&emsp;&emsp;#临时关闭selinux<br><code>getenforce</code>&emsp;&emsp;&emsp;&emsp;#检测selinux是否关闭，如果关闭则为disabled</p>
+</li>
+<li><p>打开防火墙对应的端口<br>将以下端口号添加到firewall的通行列表里面，然后reload一下firewall服务即可。<br>如果有什么不懂的请参考我之前的文章<a href="http://huppert.top/2019-03-07-linux-firewall%E7%9A%84%E4%BD%BF%E7%94%A8.html">如何配置firewall</a><br>zabbix-agent的端口号为<strong>10050</strong></p>
+</li>
+<li><p>启动zabbix agent服务并加入开机启动项<br><code>systemctl enable zabbix-agent</code><br><code>systemctl start zabbix-agent</code></p>
+</li>
+<li><p>在web平台上增加被控主机<br>配置-主机-创建主机：主机页面根据需求配置；模板页需要链接模板，根据需要链接相应的模板；<br><img src="/images/agent1" alt="第一步"><br><img src="/images/agent2" alt="第二步"><br><img src="/images/agent3" alt="第三步"><br><img src="/images/agent4" alt="第四步"><br><img src="/images/agent5" alt="第五步"><br><img src="/images/agent6" alt="第六步"><br><img src="/images/agent7" alt="第七步"><br><img src="/images/agent8" alt="第八步"><br><img src="/images/agent9" alt="第九步"><br><img src="/images/agent10" alt="第十步"></p>
+</li>
+<li><p>zabbix服务器监控自己与第七部配置过程一样（现在web端默认有一个自我监控的主机）</p>
 </li>
 </ol>
 
@@ -518,9 +522,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Ubuntu/" rel="tag"><i class="fa fa-tag"></i> Ubuntu</a>
+            <a href="/tags/centos/" rel="tag"><i class="fa fa-tag"></i> centos</a>
           
-            <a href="/tags/LVM/" rel="tag"><i class="fa fa-tag"></i> LVM</a>
+            <a href="/tags/运维/" rel="tag"><i class="fa fa-tag"></i> 运维</a>
+          
+            <a href="/tags/zabbix/" rel="tag"><i class="fa fa-tag"></i> zabbix</a>
           
         </div>
       
@@ -593,8 +599,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019-02-25-ubuntu重做引导.html" rel="next" title="ubuntu重做引导">
-                <i class="fa fa-chevron-left"></i> ubuntu重做引导
+              <a href="/2019-03-15-centos7搭建ZabbixServer.html" rel="next" title="centos7搭建ZabbixServer">
+                <i class="fa fa-chevron-left"></i> centos7搭建ZabbixServer
               </a>
             
           </div>
@@ -602,10 +608,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019-02-26-sudo权限的管理.html" rel="prev" title="sudo权限的管理">
-                sudo权限的管理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -650,17 +652,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -798,23 +791,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景介绍"><span class="nav-number">1.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是lvm"><span class="nav-number">2.</span> <span class="nav-text">什么是lvm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LVM的使用"><span class="nav-number">3.</span> <span class="nav-text">LVM的使用</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

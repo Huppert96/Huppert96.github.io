@@ -349,6 +349,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huppert.top/2019-03-15-centos7搭建ZabbixAgent.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yupeng Cao">
+      <meta itemprop="description" content="得到的和想要的对不上号">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Huppert's world">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019-03-15-centos7搭建ZabbixAgent.html" class="post-title-link" itemprop="url">centos7搭建ZabbixAgent</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-15 15:33:08 / 修改时间：16:11:16" itemprop="dateCreated datePublished" datetime="2019-03-15T15:33:08+08:00">2019-03-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#zabbix agent的搭建</p>
+<p>zabbix agent也就是通过master-agent方式监控主机，配置agent的代理端也就是被监控服务器。<br>如果zabbix server也需要被监控就也需要安装zabbix agent。<br>zabbix agent的端口号为<strong>10050</strong></p>
+<ol>
+<li><p>自动生成zabbix的yum源，这一步需要系统有公网环境<br><code>rpm -ivh http://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm</code></p>
+</li>
+<li><p>安装zabbix agent软件<br><code>yum install -y zabbix-agent</code></p>
+</li>
+<li><p>配置zabbix agent，修改如下内容<br><code>vim /etc/zabbix/zabbix_agentd.conf</code></p>
+<blockquote>
+<p>Server=172.18.20.224 &emsp;&emsp;&emsp; # zabbix server服务器的IP<br>ServerActive=172.18.20.224 &emsp;&emsp;&emsp; # zabbix server服务器的IP<br>Hostname=zabbix-agent &emsp;&emsp;&emsp; # 要与zabbix server的web端上添加的主机名一致</p>
+</blockquote>
+</li>
+<li><p>关闭selinux<br><code>vim /etc/selinux/config</code>&emsp;&emsp;&emsp;&emsp;#将SELINUX=enforcing改为SELINUX=disabled 设置后需要重启才能生效<br><code>setenforce 0</code>&emsp;&emsp;&emsp;&emsp;#临时关闭selinux<br><code>getenforce</code>&emsp;&emsp;&emsp;&emsp;#检测selinux是否关闭，如果关闭则为disabled</p>
+</li>
+<li><p>打开防火墙对应的端口<br>将以下端口号添加到firewall的通行列表里面，然后reload一下firewall服务即可。<br>如果有什么不懂的请参考我之前的文章<a href="http://huppert.top/2019-03-07-linux-firewall%E7%9A%84%E4%BD%BF%E7%94%A8.html">如何配置firewall</a><br>zabbix-agent的端口号为<strong>10050</strong></p>
+</li>
+<li><p>启动zabbix agent服务并加入开机启动项<br><code>systemctl enable zabbix-agent</code><br><code>systemctl start zabbix-agent</code></p>
+</li>
+<li><p>在web平台上增加被控主机<br>配置-主机-创建主机：主机页面根据需求配置；模板页需要链接模板，根据需要链接相应的模板；<br><img src="/images/agent1" alt="第一步"><br><img src="/images/agent2" alt="第二步"><br><img src="/images/agent3" alt="第三步"><br><img src="/images/agent4" alt="第四步"><br><img src="/images/agent5" alt="第五步"><br><img src="/images/agent6" alt="第六步"><br><img src="/images/agent7" alt="第七步"><br><img src="/images/agent8" alt="第八步"><br><img src="/images/agent9" alt="第九步"><br><img src="/images/agent10" alt="第十步"></p>
+</li>
+<li><p>zabbix服务器监控自己与第七部配置过程一样（现在web端默认有一个自我监控的主机）</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+
+<div>
+  
+</div>
+
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://huppert.top/2019-03-15-centos7搭建ZabbixServer.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -394,7 +583,7 @@
                 
               
 
-              <time title="创建时间：2019-03-15 11:23:46 / 修改时间：15:29:22" itemprop="dateCreated datePublished" datetime="2019-03-15T11:23:46+08:00">2019-03-15</time>
+              <time title="创建时间：2019-03-15 11:23:46 / 修改时间：16:03:09" itemprop="dateCreated datePublished" datetime="2019-03-15T11:23:46+08:00">2019-03-15</time>
             
 
             
@@ -537,6 +726,7 @@
 </li>
 </ol>
 <h1 id="web界面安装zabbix"><a href="#web界面安装zabbix" class="headerlink" title="web界面安装zabbix"></a>web界面安装zabbix</h1><p>如果前两部分操作无误的话，接下来就可以通过浏览器输入网址172.18.20.224/zabbix打开web安装界面。<br><img src="/images/zabbix1.png" alt="第一步"><br><img src="/images/zabbix2.png" alt="第二步"><br><img src="/images/zabbix3.png" alt="第三步"><br><img src="/images/zabbix4.png" alt="第四步"><br><img src="/images/zabbix5.png" alt="第五步"><br><img src="/images/zabbix6.png" alt="第六步"><br><img src="/images/zabbix7.png" alt="第七步"><br><img src="/images/zabbix8.png" alt="第八步"></p>
+<h1 id="web端配置中文环境"><a href="#web端配置中文环境" class="headerlink" title="web端配置中文环境"></a>web端配置中文环境</h1><p>Administrator-Users-点击用户Admin-语言中设置，效果如下：<br><img src="/images/chinese1.png" alt="中文1"><br><img src="/images/chinese2.png" alt="中文2"><br>如果web界面中文乱码，只需要从windows下面复制一个字体替换zabbix里面的字体即可。<br><img src="/images/fonts.png" alt="字体"><br>这里我用的是xterm连接服务器，可以直接拖拽文件直接上传到服务器，然后从服务器上面用上传上的字体文件替换<code>/usr/share/zabbix/fonts/</code>下的字体文件。<br><code>mv simhei.ttf /usr/share/zabbix/fonts/graphfont.ttf</code></p>
 
           
         
@@ -2311,7 +2501,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2466,7 +2656,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">本博客全站共有7.9k字，每个字都是作者的心血</span>
+  <span class="post-count">本博客全站共有8.4k字，每个字都是作者的心血</span>
 </div>
 
         
