@@ -1,293 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>centos7搭建ZabbixAgent</title>
-      <link href="/2019-03-15-centos7%E6%90%AD%E5%BB%BAZabbixAgent.html"/>
-      <url>/2019-03-15-centos7%E6%90%AD%E5%BB%BAZabbixAgent.html</url>
-      
-        <content type="html"><![CDATA[<p>#zabbix agent的搭建</p><p>zabbix agent也就是通过master-agent方式监控主机，配置agent的代理端也就是被监控服务器。<br>如果zabbix server也需要被监控就也需要安装zabbix agent。<br>zabbix agent的端口号为<strong>10050</strong></p><ol><li><p>自动生成zabbix的yum源，这一步需要系统有公网环境<br><code>rpm -ivh http://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm</code></p></li><li><p>安装zabbix agent软件<br><code>yum install -y zabbix-agent</code></p></li><li><p>配置zabbix agent，修改如下内容<br><code>vim /etc/zabbix/zabbix_agentd.conf</code></p><blockquote><p>Server=172.18.20.224 &emsp;&emsp;&emsp; # zabbix server服务器的IP<br>ServerActive=172.18.20.224 &emsp;&emsp;&emsp; # zabbix server服务器的IP<br>Hostname=zabbix-agent &emsp;&emsp;&emsp; # 要与zabbix server的web端上添加的主机名一致</p></blockquote></li><li><p>关闭selinux<br><code>vim /etc/selinux/config</code>&emsp;&emsp;&emsp;&emsp;#将SELINUX=enforcing改为SELINUX=disabled 设置后需要重启才能生效<br><code>setenforce 0</code>&emsp;&emsp;&emsp;&emsp;#临时关闭selinux<br><code>getenforce</code>&emsp;&emsp;&emsp;&emsp;#检测selinux是否关闭，如果关闭则为disabled</p></li><li><p>打开防火墙对应的端口<br>将以下端口号添加到firewall的通行列表里面，然后reload一下firewall服务即可。<br>如果有什么不懂的请参考我之前的文章<a href="http://huppert.top/2019-03-07-linux-firewall%E7%9A%84%E4%BD%BF%E7%94%A8.html">如何配置firewall</a><br>zabbix-agent的端口号为<strong>10050</strong></p></li><li><p>启动zabbix agent服务并加入开机启动项<br><code>systemctl enable zabbix-agent</code><br><code>systemctl start zabbix-agent</code></p></li><li><p>在web平台上增加被控主机<br>配置-主机-创建主机：主机页面根据需求配置；模板页需要链接模板，根据需要链接相应的模板；<br><img src="/images/agent1.png" alt="第一步"><br><img src="/images/agent2.png" alt="第二步"><br><img src="/images/agent3.png" alt="第三步"><br><img src="/images/agent4.png" alt="第四步"><br><img src="/images/agent5.png" alt="第五步"><br><img src="/images/agent6.png" alt="第六步"><br><img src="/images/agent7.png" alt="第七步"><br><img src="/images/agent8.png" alt="第八步"><br><img src="/images/agent9.png" alt="第九步"><br><img src="/images/agent10.png" alt="第十步"></p></li><li><p>zabbix服务器监控自己与第七部配置过程一样（现在web端默认有一个自我监控的主机）</p></li></ol>]]></content>
-      
-      
+<search>
+  <entry>
+    <title><![CDATA[centos7搭建ZabbixAgent]]></title>
+    <url>%2F2019-03-15-centos7%E6%90%AD%E5%BB%BAZabbixAgent.html</url>
+    <content type="text"><![CDATA[zabbix agent的搭建zabbix agent也就是通过master-agent方式监控主机，配置agent的代理端也就是被监控服务器。如果zabbix server也需要被监控就也需要安装zabbix agent。zabbix agent的端口号为10050 自动生成zabbix的yum源，这一步需要系统有公网环境rpm -ivh http://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm 安装zabbix agent软件yum install -y zabbix-agent 配置zabbix agent，修改如下内容vim /etc/zabbix/zabbix_agentd.conf Server=172.18.20.224 &emsp;&emsp;&emsp; # zabbix server服务器的IPServerActive=172.18.20.224 &emsp;&emsp;&emsp; # zabbix server服务器的IPHostname=zabbix-agent &emsp;&emsp;&emsp; # 要与zabbix server的web端上添加的主机名一致 关闭selinuxvim /etc/selinux/config&emsp;&emsp;&emsp;&emsp;#将SELINUX=enforcing改为SELINUX=disabled 设置后需要重启才能生效setenforce 0&emsp;&emsp;&emsp;&emsp;#临时关闭selinuxgetenforce&emsp;&emsp;&emsp;&emsp;#检测selinux是否关闭，如果关闭则为disabled 打开防火墙对应的端口将以下端口号添加到firewall的通行列表里面，然后reload一下firewall服务即可。如果有什么不懂的请参考我之前的文章如何配置firewallzabbix-agent的端口号为10050 启动zabbix agent服务并加入开机启动项systemctl enable zabbix-agentsystemctl start zabbix-agent 在web平台上增加被控主机配置-主机-创建主机：主机页面根据需求配置；模板页需要链接模板，根据需要链接相应的模板； zabbix服务器监控自己与第七部配置过程一样（现在web端默认有一个自我监控的主机）]]></content>
       <categories>
-          
-          <category> 教程 </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> centos </tag>
-            
-            <tag> 运维 </tag>
-            
-            <tag> zabbix </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>centos7搭建ZabbixServer</title>
-      <link href="/2019-03-15-centos7%E6%90%AD%E5%BB%BAZabbixServer.html"/>
-      <url>/2019-03-15-centos7%E6%90%AD%E5%BB%BAZabbixServer.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>zabbix是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。<br>zabbix能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位解决存在的各种问题。<br>zabbix由两部分构成，zabbix server与可选组件zabbix agent。<br>zabbix server可以通过SNMP，zabbix agent，ping，端口监视等方法提供对远程服务器/网络状态的监视，数据收集等功能，它可以运行在Linux，Solaris，HP-UX，AIX，Free BSD，Open BSD，OS X等平台上。<br>zabbix的主要特点：</p><ul><li>安装与配置简单，学习成本低</li><li>支持多语言（包括中文）</li><li>免费开源</li><li>自动发现服务器与网络设备</li><li>分布式监视以及WEB集中管理功能</li><li>可以无agent监视</li><li>用户安全认证和柔软的授权方式</li><li>通过WEB界面设置或查看监视结果</li><li>email等通知功能</li><li><p>等等<br>Zabbix主要功能：</p></li><li><p>CPU负荷</p></li><li>内存使用</li><li>磁盘使用</li><li>网络状况</li><li>端口监视</li><li>日志监视。 </li></ul><h1 id="搭建基础环境"><a href="#搭建基础环境" class="headerlink" title="搭建基础环境"></a>搭建基础环境</h1><p><strong><em>172.18.20.224为搭建zabbix服务器的地址</em></strong></p><ol><li><p>升级系统组件到最新版本<br><code>yum -y update</code></p></li><li><p>安装vim<br><code>yum -y install vim</code></p></li><li><p>关闭selinux<br><code>vim /etc/selinux/config</code>&emsp;&emsp;&emsp;&emsp;#将SELINUX=enforcing改为SELINUX=disabled 设置后需要重启才能生效<br><code>setenforce 0</code>&emsp;&emsp;&emsp;&emsp;#临时关闭selinux<br><code>getenforce</code>&emsp;&emsp;&emsp;&emsp;#检测selinux是否关闭，如果关闭则为disabled</p></li><li><p>打开防火墙对应的端口<br>将以下端口号添加到firewall的通行列表里面，然后reload一下firewall服务即可。<br>如果有什么不懂的请参考我之前的文章<a href="http://huppert.top/2019-03-07-linux-firewall%E7%9A%84%E4%BD%BF%E7%94%A8.html">如何配置firewall</a><br>httpd服务的端口号为<strong>80</strong><br>mysql服务的端口号为<strong>3306</strong><br>zabbix-server的端口号为<strong>10051</strong><br>zabbix-agent的端口号为<strong>10050</strong></p></li><li><p>搭建LAMP环境<br>5.1 安装所需的软件<br><code>yum install -y httpd mariadb-server mariadb php php-mysql php-gd libjpeg* php-ldap php-odbc php-pear php-xml php-xmlrpc php-mhash</code></p><p>5.2 编辑httpd<br><code>vim /etc/httpd/conf/httpd.conf</code><br>修改以下两行内容</p><blockquote><p>ServerName <a href="http://www.zabbix.com" target="_blank" rel="noopener">www.zabbix.com</a> &emsp;&emsp;&emsp; #修改为主机名<br>DirectoryIndex index.html index.php &emsp;&emsp;&emsp; # 添加首页支持格式</p></blockquote><p>5.3 编辑php<br><code>vim /etc/php.ini</code></p><blockquote><p>date.timezone = PRC &emsp;&emsp;&emsp; # 修改为中国时区</p></blockquote></li><li><p>启动httpd和mysql<br><code>systemctl start httpd</code> &emsp;&emsp;&emsp; #启动并加入开机自启动httpd<br><code>systemctl enable httpd</code><br><code>systemctl start mariadb</code> &emsp;&emsp;&emsp; #启动并加入开机自启动mysqld<br><code>systemctl enable mariadb</code></p></li><li><p>检测httpd服务(端口号为80)和mysql服务(端口号为3306)是否成功启动<br><code>netstat -atnp | grep httpd</code><br><code>netstat -atnp | grep mysql</code></p></li><li><p>创建测试页测试LAMP是否搭建成功<br><code>vim /var/www/html/index.php</code> &emsp;&emsp;&emsp; #创建一个测试页，并编辑</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">phpinfo()</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>如果搭建成功浏览器访问172.18.20.224/index.php即可看到php版本信息。</p></li><li><p>初始化mysql数据库，并配置root用户密码<br><code>mysql_secure_installation</code><br>由于是第一次配置，直接回车，然后Y，然后输入密码，重复一遍密码，接下来一直回车即可。</p></li><li><p>配置数据库<br>10.1 以root身份登陆数据库<br><code>mysql -u root -p</code><br>然后输入root密码即可。</p><p>10.2 创建zabbix数据库（中文编码格式）<br><code>CREATE DATABASE zabbix character set utf8 collate utf8_bin;</code></p><p>10.3 授予zabbix用户zabbix数据库的所有权限，密码zabbix123<br><code>GRANT all ON zabbix.* TO &#39;zabbix&#39;@&#39;%&#39; IDENTIFIED BY &#39;zabbix123&#39;;</code> &emsp;&emsp;&emsp; # 这里%意味着所有主机</p><p>10.4 刷新权限<br><code>flush privileges;</code></p><p>10.5退出数据库<br><code>quit</code></p></li></ol><h1 id="安装zabbix-server"><a href="#安装zabbix-server" class="headerlink" title="安装zabbix server"></a>安装zabbix server</h1><ol><li><p>安装依赖包加组件<br><code>yum -y install net-snmp net-snmp-devel curl curl-devel libxml2 libxml2-devel  libevent-devel.x86_64 javacc.noarch  javacc-javadoc.noarch javacc-maven-plugin.noarch javacc*</code></p></li><li><p>安装php支持zabbix组件<br><code>yum -y install php-bcmath php-mbstring</code></p></li><li><p>下载下面这个rpm包会自动生成yum源文件，需要公网环境<br><code>rpm -ivh http://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm</code></p></li><li><p>安装zabbix组件<br><code>yum -y install zabbix-server-mysql zabbix-web-mysql</code></p></li><li><p>导入数据到数据库zabbix中(最后一个zabbix是数据库zabbix)，且因为用户zabbix是%(任意主机)，所以登录时需要加上当前主机ip(-h 172.18.20.224),用户是zabbix登陆密码zabbix123<br><code>zcat /usr/share/doc/zabbix-server-mysql-4.0.5/create.sql.gz | mysql -uzabbix -p -h 172.18.20.224 zabbix</code></p></li><li><p>配置数据库用户及密码（修改如下内容）<br><code>vim /etc/zabbix/zabbix_server.conf</code></p><blockquote><p>DBName=zabbix<br>DBuser=zabbix<br>DBPassword=zabbix123</p></blockquote></li><li><p>修改时区<br><code>vim /etc/httpd/conf.d/zabbix.conf</code><br>将<code># php_value date.timezone Europe/Riga</code> 变更成<code>php_value date.timezone Asia/Shanghai</code></p></li><li><p>启动zabbix-server服务并加入开机启动项<br><code>systemctl enable zabbix-server</code><br><code>systemctl start zabbix-server</code></p></li><li><p>查看zabbix-server服务是否成功启动（如没有检测到10051端口，请重启zabbix-server服务）<br><code>netstat -anpt | grep zabbix</code></p></li><li><p>重启一下httpd服务<br><code>systemctl restart httpd</code></p></li></ol><h1 id="web界面安装zabbix"><a href="#web界面安装zabbix" class="headerlink" title="web界面安装zabbix"></a>web界面安装zabbix</h1><p>如果前两部分操作无误的话，接下来就可以通过浏览器输入网址172.18.20.224/zabbix打开web安装界面。<br><img src="/images/zabbix1.png" alt="第一步"><br><img src="/images/zabbix2.png" alt="第二步"><br><img src="/images/zabbix3.png" alt="第三步"><br><img src="/images/zabbix4.png" alt="第四步"><br><img src="/images/zabbix5.png" alt="第五步"><br><img src="/images/zabbix6.png" alt="第六步"><br><img src="/images/zabbix7.png" alt="第七步"><br><img src="/images/zabbix8.png" alt="第八步"></p><h1 id="web端配置中文环境"><a href="#web端配置中文环境" class="headerlink" title="web端配置中文环境"></a>web端配置中文环境</h1><p>Administrator-Users-点击用户Admin-语言中设置，效果如下：<br><img src="/images/chinese1.png" alt="中文1"><br><img src="/images/chinese2.png" alt="中文2"><br>如果web界面中文乱码，只需要从windows下面复制一个字体替换zabbix里面的字体即可。<br><img src="/images/fonts.png" alt="字体"><br>这里我用的是xterm连接服务器，可以直接拖拽文件直接上传到服务器，然后从服务器上面用上传上的字体文件替换<code>/usr/share/zabbix/fonts/</code>下的字体文件。<br><code>mv simhei.ttf /usr/share/zabbix/fonts/graphfont.ttf</code></p>]]></content>
-      
-      
+      <tags>
+        <tag>centos</tag>
+        <tag>运维</tag>
+        <tag>zabbix</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[centos7搭建ZabbixServer]]></title>
+    <url>%2F2019-03-15-centos7%E6%90%AD%E5%BB%BAZabbixServer.html</url>
+    <content type="text"><![CDATA[简介zabbix是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。zabbix能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位解决存在的各种问题。zabbix由两部分构成，zabbix server与可选组件zabbix agent。zabbix server可以通过SNMP，zabbix agent，ping，端口监视等方法提供对远程服务器/网络状态的监视，数据收集等功能，它可以运行在Linux，Solaris，HP-UX，AIX，Free BSD，Open BSD，OS X等平台上。zabbix的主要特点： 安装与配置简单，学习成本低 支持多语言（包括中文） 免费开源 自动发现服务器与网络设备 分布式监视以及WEB集中管理功能 可以无agent监视 用户安全认证和柔软的授权方式 通过WEB界面设置或查看监视结果 email等通知功能 等等Zabbix主要功能： CPU负荷 内存使用 磁盘使用 网络状况 端口监视 日志监视。 搭建基础环境172.18.20.224为搭建zabbix服务器的地址 升级系统组件到最新版本yum -y update 安装vimyum -y install vim 关闭selinuxvim /etc/selinux/config&emsp;&emsp;&emsp;&emsp;#将SELINUX=enforcing改为SELINUX=disabled 设置后需要重启才能生效setenforce 0&emsp;&emsp;&emsp;&emsp;#临时关闭selinuxgetenforce&emsp;&emsp;&emsp;&emsp;#检测selinux是否关闭，如果关闭则为disabled 打开防火墙对应的端口将以下端口号添加到firewall的通行列表里面，然后reload一下firewall服务即可。如果有什么不懂的请参考我之前的文章如何配置firewallhttpd服务的端口号为80mysql服务的端口号为3306zabbix-server的端口号为10051zabbix-agent的端口号为10050 搭建LAMP环境5.1 安装所需的软件yum install -y httpd mariadb-server mariadb php php-mysql php-gd libjpeg* php-ldap php-odbc php-pear php-xml php-xmlrpc php-mhash 5.2 编辑httpdvim /etc/httpd/conf/httpd.conf修改以下两行内容 ServerName www.zabbix.com &emsp;&emsp;&emsp; #修改为主机名DirectoryIndex index.html index.php &emsp;&emsp;&emsp; # 添加首页支持格式 5.3 编辑phpvim /etc/php.ini date.timezone = PRC &emsp;&emsp;&emsp; # 修改为中国时区 启动httpd和mysqlsystemctl start httpd &emsp;&emsp;&emsp; #启动并加入开机自启动httpdsystemctl enable httpdsystemctl start mariadb &emsp;&emsp;&emsp; #启动并加入开机自启动mysqldsystemctl enable mariadb 检测httpd服务(端口号为80)和mysql服务(端口号为3306)是否成功启动netstat -atnp | grep httpdnetstat -atnp | grep mysql 创建测试页测试LAMP是否搭建成功vim /var/www/html/index.php &emsp;&emsp;&emsp; #创建一个测试页，并编辑 123&lt;?phpphpinfo()?&gt; 如果搭建成功浏览器访问172.18.20.224/index.php即可看到php版本信息。 初始化mysql数据库，并配置root用户密码mysql_secure_installation由于是第一次配置，直接回车，然后Y，然后输入密码，重复一遍密码，接下来一直回车即可。 配置数据库10.1 以root身份登陆数据库mysql -u root -p然后输入root密码即可。 10.2 创建zabbix数据库（中文编码格式）CREATE DATABASE zabbix character set utf8 collate utf8_bin; 10.3 授予zabbix用户zabbix数据库的所有权限，密码zabbix123GRANT all ON zabbix.* TO &#39;zabbix&#39;@&#39;%&#39; IDENTIFIED BY &#39;zabbix123&#39;; &emsp;&emsp;&emsp; # 这里%意味着所有主机 10.4 刷新权限flush privileges; 10.5退出数据库quit 安装zabbix server 安装依赖包加组件yum -y install net-snmp net-snmp-devel curl curl-devel libxml2 libxml2-devel libevent-devel.x86_64 javacc.noarch javacc-javadoc.noarch javacc-maven-plugin.noarch javacc* 安装php支持zabbix组件yum -y install php-bcmath php-mbstring 下载下面这个rpm包会自动生成yum源文件，需要公网环境rpm -ivh http://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm 安装zabbix组件yum -y install zabbix-server-mysql zabbix-web-mysql 导入数据到数据库zabbix中(最后一个zabbix是数据库zabbix)，且因为用户zabbix是%(任意主机)，所以登录时需要加上当前主机ip(-h 172.18.20.224),用户是zabbix登陆密码zabbix123zcat /usr/share/doc/zabbix-server-mysql-4.0.5/create.sql.gz | mysql -uzabbix -p -h 172.18.20.224 zabbix 配置数据库用户及密码（修改如下内容）vim /etc/zabbix/zabbix_server.conf DBName=zabbixDBuser=zabbixDBPassword=zabbix123 修改时区vim /etc/httpd/conf.d/zabbix.conf将# php_value date.timezone Europe/Riga 变更成php_value date.timezone Asia/Shanghai 启动zabbix-server服务并加入开机启动项systemctl enable zabbix-serversystemctl start zabbix-server 查看zabbix-server服务是否成功启动（如没有检测到10051端口，请重启zabbix-server服务）netstat -anpt | grep zabbix 重启一下httpd服务systemctl restart httpd web界面安装zabbix如果前两部分操作无误的话，接下来就可以通过浏览器输入网址172.18.20.224/zabbix打开web安装界面。 web端配置中文环境Administrator-Users-点击用户Admin-语言中设置，效果如下：如果web界面中文乱码，只需要从windows下面复制一个字体替换zabbix里面的字体即可。这里我用的是xterm连接服务器，可以直接拖拽文件直接上传到服务器，然后从服务器上面用上传上的字体文件替换/usr/share/zabbix/fonts/下的字体文件。mv simhei.ttf /usr/share/zabbix/fonts/graphfont.ttf]]></content>
       <categories>
-          
-          <category> 教程 </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> centos </tag>
-            
-            <tag> 运维 </tag>
-            
-            <tag> zabbix </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>ss_first出问题的排查思路和解决方案</title>
-      <link href="/2019-03-07-ss-first%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html"/>
-      <url>/2019-03-07-ss-first%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html</url>
-      
-        <content type="html"><![CDATA[<p>直接进入正文，事情的起因是今天本来再了解esxi，也就是vsphere相关的组件，准备搞一个esxi用来方便自己练习，尝试keepalived、zabbix、nginx、ansible等各种运维需要用到的工具环境，但是在查找资料的过程中突然发现我的ss挂了，不能番羽土蔷了，瞬间很惊慌，接下来是我排查问题，到解决问题的全过程。</p><ol><li><p>首先我看了自己的手机还能不能使用，因为有可能只是电脑不能使用，这种情况也不是没有出现过，但是尝试之后发现手机也不能用了，那么基本上已经可以断定是服务器出问题了。</p></li><li><p>接下来就要排查到底是服务器哪儿出问题了，首先猜想是不是服务器被土蔷了，首先打开Windows的命令行，<code>win+R</code>，然后输入<code>cmd</code>，回车，<code>ping x.x.x.x</code>测试服务器是否还能通信，是否者挂掉了或被土蔷了，结果显示很正常。</p></li><li><p>既然服务器正常运行，那么就要通过ssh服务连上服务器查找问题了。<br>可以<code>win+R</code>然后输入<code>cmd</code>，回车，然后输入<code>ssh someone@x.x.x.x -p 1122</code>，回车，其中someone是你的登陆账号，-p后面的事你的ssh端口号。第一次登陆会让输入yes or no，选择是否信任这台主机，yes回车即可，然后输入someone账户的密码，进入服务器。<br>在这里我用的是xterm这个软件，里面默认保存的有我的服务器信息，直接双击打开就可以连接上服务器。</p></li><li><p>进入服务器之后，我首先使用<code>systemctl status shadowsocks</code>查看服务运行状况，虽然显示有几个密码或加密方式认证错误，但是很显然不是本次出现问题的原因。其他的并没有任何有用的信息，索性重启了一次shadowsocks服务<code>systemctl restart shadowsocks</code>，问题还是没有解决。</p></li><li><p>突然想到是不是服务器本身就不能访问Google，<code>ping www.google.com</code>测试了一下一切正常。</p></li><li><p>最后想到，既然服务器IP地址没问题，那么是不是端口被土蔷了呢？凑巧之前看到过一篇文章讲到现在great wall有的是通过封端口来进行限制的。所以我又<code>vim /etc/shadowsocks.json</code>编辑配置文件，修改了里面的端口，然后重启服务<code>systemctl restart shadowsocks</code>，最后千万不要忘了修改防火墙配置，将之前的端口去掉，然后加上修改后的端口。<br><code>firewall-cmd --zone=public --remove-port=xxxx/tcp --premanent</code><br><code>firewall-cmd --zone=public --add-port=xxxx/tcp --premanent</code><br><code>firewall-cmd --reload</code></p></li><li><p>做完以上的工作之后，又修改了一下本地shadowsocks软件的配置信息，重新启动系统代理，打开浏览器，输入<code>www.google.com.hk</code>发现已经一切正常了。然后改了一下手机上的配置信息，连接之后测试连接，也显示一切正常。到这里本次的内容已经全部完成。一切恢复正常。</p></li></ol>]]></content>
-      
-      
+      <tags>
+        <tag>centos</tag>
+        <tag>运维</tag>
+        <tag>zabbix</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ss_first出问题的排查思路和解决方案]]></title>
+    <url>%2F2019-03-07-ss-first%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html</url>
+    <content type="text"><![CDATA[直接进入正文，事情的起因是今天本来再了解esxi，也就是vsphere相关的组件，准备搞一个esxi用来方便自己练习，尝试keepalived、zabbix、nginx、ansible等各种运维需要用到的工具环境，但是在查找资料的过程中突然发现我的ss挂了，不能番羽土蔷了，瞬间很惊慌，接下来是我排查问题，到解决问题的全过程。 首先我看了自己的手机还能不能使用，因为有可能只是电脑不能使用，这种情况也不是没有出现过，但是尝试之后发现手机也不能用了，那么基本上已经可以断定是服务器出问题了。 接下来就要排查到底是服务器哪儿出问题了，首先猜想是不是服务器被土蔷了，首先打开Windows的命令行，win+R，然后输入cmd，回车，ping x.x.x.x测试服务器是否还能通信，是否者挂掉了或被土蔷了，结果显示很正常。 既然服务器正常运行，那么就要通过ssh服务连上服务器查找问题了。可以win+R然后输入cmd，回车，然后输入ssh someone@x.x.x.x -p 1122，回车，其中someone是你的登陆账号，-p后面的事你的ssh端口号。第一次登陆会让输入yes or no，选择是否信任这台主机，yes回车即可，然后输入someone账户的密码，进入服务器。在这里我用的是xterm这个软件，里面默认保存的有我的服务器信息，直接双击打开就可以连接上服务器。 进入服务器之后，我首先使用systemctl status shadowsocks查看服务运行状况，虽然显示有几个密码或加密方式认证错误，但是很显然不是本次出现问题的原因。其他的并没有任何有用的信息，索性重启了一次shadowsocks服务systemctl restart shadowsocks，问题还是没有解决。 突然想到是不是服务器本身就不能访问Google，ping www.google.com测试了一下一切正常。 最后想到，既然服务器IP地址没问题，那么是不是端口被土蔷了呢？凑巧之前看到过一篇文章讲到现在great wall有的是通过封端口来进行限制的。所以我又vim /etc/shadowsocks.json编辑配置文件，修改了里面的端口，然后重启服务systemctl restart shadowsocks，最后千万不要忘了修改防火墙配置，将之前的端口去掉，然后加上修改后的端口。firewall-cmd --zone=public --remove-port=xxxx/tcp --premanentfirewall-cmd --zone=public --add-port=xxxx/tcp --premanentfirewall-cmd --reload 做完以上的工作之后，又修改了一下本地shadowsocks软件的配置信息，重新启动系统代理，打开浏览器，输入www.google.com.hk发现已经一切正常了。然后改了一下手机上的配置信息，连接之后测试连接，也显示一切正常。到这里本次的内容已经全部完成。一切恢复正常。]]></content>
       <categories>
-          
-          <category> 日志 </category>
-          
+        <category>日志</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> shadowsocks </tag>
-            
-            <tag> centos </tag>
-            
-            <tag> 排错日志 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>linux_firewall的使用</title>
-      <link href="/2019-03-07-linux-firewall%E7%9A%84%E4%BD%BF%E7%94%A8.html"/>
-      <url>/2019-03-07-linux-firewall%E7%9A%84%E4%BD%BF%E7%94%A8.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>首先本篇介绍是基于centos7的系统环境，本来刚开始学习Linux防火墙的时候我还在学习iptables，但是后来发现centos7已经默认使用firewall来承担防火墙的功能，要知道本来centos6版本默认的防火墙还是iptables，在这里我也不想去评判firewall和iptables哪个更好用，但是既然centos7用了firewall，我就给大家简单介绍一下firewall的基本操作。</p><p>firewall也就是防火墙，在Linux安全里面担负着至关重要的角色，可能我现在对与防火墙的配置还没有很深刻的理解，但是还是给大家简单介绍一下我眼中的防火墙的使用。</p><p>可能刚接触Linux操作系统的人，或者刚开始用Linux操作系统作为服务器提供某些服务的人，如果遇到服务搭建完成但是自己去尝试访问却死活访问不到的时候，还在用最粗暴的办法来解决这个问题，也就是直接关掉防火墙，也就是<code>systemctl stop firewalld</code>，更有甚者，有些机灵的同学还加了一句<code>systemctl disable firewalld</code>来关掉firewalld服务的开机启动。（没错，你没看错，firewall在服务中的名字就是firewalld。如果操作系统中没有这个软件的话，安装的时候也是这个名字，也就是<code>yum -y install firewalld</code>）</p><p>而firewall防火墙引入了一个信任级别的概念来管理与之相关联的连接与接口。</p><p>他将不同的网络连接归类到不同的信任级别，Zone提供了以下几个级别：</p><blockquote><p>drop: 丢弃所有进入的包，而不给出任何响应<br>block: 拒绝所有外部发起的连接，允许内部发起的连接<br>public: 允许指定的进入连接<br>external: 同上，对伪装的进入连接，一般用于路由转发<br>dmz: 允许受限制的进入连接<br>work: 允许受信任的计算机被限制的进入连接，类似 workgroup<br>home: 同上，类似 homegroup<br>internal: 同上，范围针对所有互联网用户<br>trusted: 信任所有连接</p></blockquote><p>不多BB，接下来进入正题，firewall的基本操作。</p><h1 id="firewall的使用方法"><a href="#firewall的使用方法" class="headerlink" title="firewall的使用方法"></a>firewall的使用方法</h1><h2 id="服务相关操作"><a href="#服务相关操作" class="headerlink" title="服务相关操作"></a>服务相关操作</h2><h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p><code>systemctl start firewalld</code></p><h4 id="停止"><a href="#停止" class="headerlink" title="停止"></a>停止</h4><p><code>systemctl stopfirewalld</code></p><h4 id="开机启动"><a href="#开机启动" class="headerlink" title="开机启动"></a>开机启动</h4><p><code>systemctl enable firewalld</code></p><h4 id="关闭开机启动"><a href="#关闭开机启动" class="headerlink" title="关闭开机启动"></a>关闭开机启动</h4><p><code>systemctl disable firewalld</code></p><h4 id="查看状态"><a href="#查看状态" class="headerlink" title="查看状态"></a>查看状态</h4><p><code>systemctl status firewalld</code></p><h2 id="查看规则"><a href="#查看规则" class="headerlink" title="查看规则"></a>查看规则</h2><p>####查看帮助信息<br><code>firewall-cmd --help</code></p><h4 id="查看运行状态"><a href="#查看运行状态" class="headerlink" title="查看运行状态"></a>查看运行状态</h4><p><code>firewall-cmd --status</code></p><h4 id="查看已被激活的zone信息"><a href="#查看已被激活的zone信息" class="headerlink" title="查看已被激活的zone信息"></a>查看已被激活的zone信息</h4><p><code>firewall-cmd --get-active-zones</code></p><h4 id="查看指定接口的zone信息"><a href="#查看指定接口的zone信息" class="headerlink" title="查看指定接口的zone信息"></a>查看指定接口的zone信息</h4><p><code>firewall-cmd --get-zone-of-interface=eth0</code></p><h4 id="查看指定级别的接口信息"><a href="#查看指定级别的接口信息" class="headerlink" title="查看指定级别的接口信息"></a>查看指定级别的接口信息</h4><p><code>firewall-cmd --zone=public --list-interfaces</code></p><h4 id="查看指定级别的所有信息"><a href="#查看指定级别的所有信息" class="headerlink" title="查看指定级别的所有信息"></a>查看指定级别的所有信息</h4><p><code>firewall-cmd --zone=public --list-all</code></p><h4 id="查看所有级别被允许的信息"><a href="#查看所有级别被允许的信息" class="headerlink" title="查看所有级别被允许的信息"></a>查看所有级别被允许的信息</h4><p><code>firewall-cmd --get-service</code></p><h4 id="查看重启后所有zone中被允许的服务，即永久放行的服务"><a href="#查看重启后所有zone中被允许的服务，即永久放行的服务" class="headerlink" title="查看重启后所有zone中被允许的服务，即永久放行的服务"></a>查看重启后所有zone中被允许的服务，即永久放行的服务</h4><p><code>firewall-cmd --get-service --permanent</code></p><h2 id="管理规则"><a href="#管理规则" class="headerlink" title="管理规则"></a>管理规则</h2><h4 id="更新规则，不重启服务（不会断掉正在连接的tcp会话）"><a href="#更新规则，不重启服务（不会断掉正在连接的tcp会话）" class="headerlink" title="更新规则，不重启服务（不会断掉正在连接的tcp会话）"></a>更新规则，不重启服务（不会断掉正在连接的tcp会话）</h4><p><code>firewall-cmd --reload</code></p><h4 id="更新规则，重启服务（会断开tcp会话）"><a href="#更新规则，重启服务（会断开tcp会话）" class="headerlink" title="更新规则，重启服务（会断开tcp会话）"></a>更新规则，重启服务（会断开tcp会话）</h4><p><code>firewall-cmd --complete-reload</code></p><h4 id="将某个接口添加至某信任级别，再永久生效，比如将eth0加入public"><a href="#将某个接口添加至某信任级别，再永久生效，比如将eth0加入public" class="headerlink" title="将某个接口添加至某信任级别，再永久生效，比如将eth0加入public"></a>将某个接口添加至某信任级别，再永久生效，比如将eth0加入public</h4><p><code>firewall-cmd --zone=public --add-interface=eth0 --permanent</code></p><h4 id="设置public为默认的信任级别"><a href="#设置public为默认的信任级别" class="headerlink" title="设置public为默认的信任级别"></a>设置public为默认的信任级别</h4><p><code>firewall-cmd --set-default-zone=public</code></p><h4 id="列出某zone（例如public）被允许的进入端口"><a href="#列出某zone（例如public）被允许的进入端口" class="headerlink" title="列出某zone（例如public）被允许的进入端口"></a>列出某zone（例如public）被允许的进入端口</h4><p><code>firewall-cmd --zone=public --list-ports</code></p><h4 id="允许tcp或udp某-范围-端口至public级别，并永久生效"><a href="#允许tcp或udp某-范围-端口至public级别，并永久生效" class="headerlink" title="允许tcp或udp某[范围]端口至public级别，并永久生效"></a>允许tcp或udp某[范围]端口至public级别，并永久生效</h4><p><code>firewall-cmd --zone=public --add-port=8080/tcp --permanent</code><br><code>firewall-cmd --zone=public --add-port=6666-6677/udp --permanent</code></p><h4 id="添加smtp服务到work-zone"><a href="#添加smtp服务到work-zone" class="headerlink" title="添加smtp服务到work zone"></a>添加smtp服务到work zone</h4><p><code>firewall-cmd --zone=work --add-service=smtp</code></p><h4 id="从work-zone移除smtp服务"><a href="#从work-zone移除smtp服务" class="headerlink" title="从work zone移除smtp服务"></a>从work zone移除smtp服务</h4><p><code>firewall-cmd --zone=work --remove-service=smtp</code></p><h4 id="IP地址伪装"><a href="#IP地址伪装" class="headerlink" title="IP地址伪装"></a>IP地址伪装</h4><blockquote><p>此举启用区域的伪装功能。私有网络的地址将被隐藏并映射到一个公有IP。这是地址转换的一种形式，常用于路由。由于内核的限制，伪装功能仅可用于IPv4。</p></blockquote><h5 id="查看伪装"><a href="#查看伪装" class="headerlink" title="查看伪装"></a>查看伪装</h5><p><code>firewall-cmd --zone=external --query-masquerade</code></p><p>#####打开伪装<br><code>firewall-cmd --zone=external --add-masquerade</code></p><p>#####关闭伪装<br><code>firewall-cmd --zone=external --remove-masquerade</code></p><h4 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h4><p><code>firewall-cmd [--zone=&lt;zone&gt;] --add-forward-port=port=&lt;port&gt;[-&lt;port&gt;]:proto=&lt;protocol&gt; { :toport=&lt;port&gt;[-&lt;port&gt;] | :toaddr=&lt;address&gt; | :toport=&lt;port&gt;[-&lt;port&gt;]:toaddr=&lt;address&gt; }</code></p><h5 id="如果想要打开端口转发，首先要打开伪装"><a href="#如果想要打开端口转发，首先要打开伪装" class="headerlink" title="如果想要打开端口转发，首先要打开伪装"></a>如果想要打开端口转发，首先要打开伪装</h5><p><code>firewall-cmd --zone=external --add-masquerade</code></p><h5 id="转发tcp-1111端口数据到2333端口，永久生效"><a href="#转发tcp-1111端口数据到2333端口，永久生效" class="headerlink" title="转发tcp 1111端口数据到2333端口，永久生效"></a>转发tcp 1111端口数据到2333端口，永久生效</h5><p><code>firewall-cmd --zone=external --add-forward-port=port=1111:proto=tcp:toport=2333 --permanent</code></p><h5 id="转发tcp-1111端口数据到另一IP的1111端口，永久生效"><a href="#转发tcp-1111端口数据到另一IP的1111端口，永久生效" class="headerlink" title="转发tcp 1111端口数据到另一IP的1111端口，永久生效"></a>转发tcp 1111端口数据到另一IP的1111端口，永久生效</h5><p><code>firewall-cmd --zone=external --add-forward-port=port=1111:proto=tcp:toaddr=192.168.1.1 --permanent</code></p><h5 id="转发tcp-1111端口数据到另一IP的2333端口，永久生效"><a href="#转发tcp-1111端口数据到另一IP的2333端口，永久生效" class="headerlink" title="转发tcp 1111端口数据到另一IP的2333端口，永久生效"></a>转发tcp 1111端口数据到另一IP的2333端口，永久生效</h5><p><code>firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=2055:toaddr=192.168.1.1 --permanent</code></p>]]></content>
-      
-      
+      <tags>
+        <tag>shadowsocks</tag>
+        <tag>centos</tag>
+        <tag>排错日志</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[linux_firewall的使用]]></title>
+    <url>%2F2019-03-07-linux-firewall%E7%9A%84%E4%BD%BF%E7%94%A8.html</url>
+    <content type="text"><![CDATA[介绍首先本篇介绍是基于centos7的系统环境，本来刚开始学习Linux防火墙的时候我还在学习iptables，但是后来发现centos7已经默认使用firewall来承担防火墙的功能，要知道本来centos6版本默认的防火墙还是iptables，在这里我也不想去评判firewall和iptables哪个更好用，但是既然centos7用了firewall，我就给大家简单介绍一下firewall的基本操作。 firewall也就是防火墙，在Linux安全里面担负着至关重要的角色，可能我现在对与防火墙的配置还没有很深刻的理解，但是还是给大家简单介绍一下我眼中的防火墙的使用。 可能刚接触Linux操作系统的人，或者刚开始用Linux操作系统作为服务器提供某些服务的人，如果遇到服务搭建完成但是自己去尝试访问却死活访问不到的时候，还在用最粗暴的办法来解决这个问题，也就是直接关掉防火墙，也就是systemctl stop firewalld，更有甚者，有些机灵的同学还加了一句systemctl disable firewalld来关掉firewalld服务的开机启动。（没错，你没看错，firewall在服务中的名字就是firewalld。如果操作系统中没有这个软件的话，安装的时候也是这个名字，也就是yum -y install firewalld） 而firewall防火墙引入了一个信任级别的概念来管理与之相关联的连接与接口。 他将不同的网络连接归类到不同的信任级别，Zone提供了以下几个级别： drop: 丢弃所有进入的包，而不给出任何响应block: 拒绝所有外部发起的连接，允许内部发起的连接public: 允许指定的进入连接external: 同上，对伪装的进入连接，一般用于路由转发dmz: 允许受限制的进入连接work: 允许受信任的计算机被限制的进入连接，类似 workgrouphome: 同上，类似 homegroupinternal: 同上，范围针对所有互联网用户trusted: 信任所有连接 不多BB，接下来进入正题，firewall的基本操作。 firewall的使用方法服务相关操作启动systemctl start firewalld 停止systemctl stopfirewalld 开机启动systemctl enable firewalld 关闭开机启动systemctl disable firewalld 查看状态systemctl status firewalld 查看规则####查看帮助信息firewall-cmd --help 查看运行状态firewall-cmd --status 查看已被激活的zone信息firewall-cmd --get-active-zones 查看指定接口的zone信息firewall-cmd --get-zone-of-interface=eth0 查看指定级别的接口信息firewall-cmd --zone=public --list-interfaces 查看指定级别的所有信息firewall-cmd --zone=public --list-all 查看所有级别被允许的信息firewall-cmd --get-service 查看重启后所有zone中被允许的服务，即永久放行的服务firewall-cmd --get-service --permanent 管理规则更新规则，不重启服务（不会断掉正在连接的tcp会话）firewall-cmd --reload 更新规则，重启服务（会断开tcp会话）firewall-cmd --complete-reload 将某个接口添加至某信任级别，再永久生效，比如将eth0加入publicfirewall-cmd --zone=public --add-interface=eth0 --permanent 设置public为默认的信任级别firewall-cmd --set-default-zone=public 列出某zone（例如public）被允许的进入端口firewall-cmd --zone=public --list-ports 允许tcp或udp某[范围]端口至public级别，并永久生效firewall-cmd --zone=public --add-port=8080/tcp --permanentfirewall-cmd --zone=public --add-port=6666-6677/udp --permanent 添加smtp服务到work zonefirewall-cmd --zone=work --add-service=smtp 从work zone移除smtp服务firewall-cmd --zone=work --remove-service=smtp IP地址伪装 此举启用区域的伪装功能。私有网络的地址将被隐藏并映射到一个公有IP。这是地址转换的一种形式，常用于路由。由于内核的限制，伪装功能仅可用于IPv4。 查看伪装firewall-cmd --zone=external --query-masquerade #####打开伪装firewall-cmd --zone=external --add-masquerade #####关闭伪装firewall-cmd --zone=external --remove-masquerade 端口转发firewall-cmd [--zone=&lt;zone&gt;] --add-forward-port=port=&lt;port&gt;[-&lt;port&gt;]:proto=&lt;protocol&gt; { :toport=&lt;port&gt;[-&lt;port&gt;] | :toaddr=&lt;address&gt; | :toport=&lt;port&gt;[-&lt;port&gt;]:toaddr=&lt;address&gt; } 如果想要打开端口转发，首先要打开伪装firewall-cmd --zone=external --add-masquerade 转发tcp 1111端口数据到2333端口，永久生效firewall-cmd --zone=external --add-forward-port=port=1111:proto=tcp:toport=2333 --permanent 转发tcp 1111端口数据到另一IP的1111端口，永久生效firewall-cmd --zone=external --add-forward-port=port=1111:proto=tcp:toaddr=192.168.1.1 --permanent 转发tcp 1111端口数据到另一IP的2333端口，永久生效firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=2055:toaddr=192.168.1.1 --permanent]]></content>
       <categories>
-          
-          <category> 教程 </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> linux </tag>
-            
-            <tag> 安全 </tag>
-            
-            <tag> 防火墙 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>sudo权限的管理</title>
-      <link href="/2019-02-26-sudo%E6%9D%83%E9%99%90%E7%9A%84%E7%AE%A1%E7%90%86.html"/>
-      <url>/2019-02-26-sudo%E6%9D%83%E9%99%90%E7%9A%84%E7%AE%A1%E7%90%86.html</url>
-      
-        <content type="html"><![CDATA[<p>Linux系统的权限管理不仅有用户权限管理，还有文件权限管理，这里主要是关于用户的权限管理，通俗的讲就是sudo用户的管理，管理sudo用户最主要的就是编辑/etc/sudoers文件。</p><p>而Linux用户默认是没有单独添加任何用户到sudoers文件里面的，所以我们需要以root用户的身份编辑sudoers文件。</p><p><code>visudo /etc/sudoers</code>编辑sudoers文件</p><blockquote><p>x y=(z) m</p></blockquote><p>其中x为使用者的账号，即哪个账号可以使用sudo这个命令。%x意为x群组可以使用sudo这个命令。</p><p>y为登陆着的来源主机名称，即x账号从哪个主机登陆可以使用sudo命令，一般默认为ALL，即任意主机即可。</p><p>z为可切换的身份，即x账号通过执行sudo命令可以切换到z身份去执行sudo后面的命令。一般默认为root，也可设为系统中的其他用户。</p><p>m为可下达的指令，即x账号切换为z身份都能执行哪些命令，可以为ALL，即全部命令，也可以具体到某一条命令，比如vim、cd、cp，需要注意的是这里的m应该是命令的绝对路径，如果是passwd命令的话应该填成<code>/usr/bin/passwd</code>，这里推荐使用<code>which 命令</code>来查看命令的绝对路径。</p><p>m中多个命令用<code>，</code>隔开，也可以在绝对路径前面加上<code>!</code>，比如<code>!/usr/bin/passwd</code>意为passwd命令不可执行。m前也可以加上<code>NOPASSWD:</code>选项，表示用户使用sudo命令执行m命令的时候可以不用输入密码，直接执行。</p><p>如果有多个用户想要使用sudo命令，并且需要通过sudo命令去执行同一个命令，或者需要修改用户通过sudo执行的命令的时候，如果一个一个去添加，或者一个一个去修改，显得很麻烦，所以就有别名这一说法，别名指指令别名、账号别名、主机别名。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">User_Alias ADMPW = pro1, pro2, pro3, myuser1, myuser2</span><br><span class="line">Cmnd_Alias ADMPWCOM = !/usr/bin/passwd, /usr/bin/passwd [A-Za-z]*, !/usr/bin/passwd root</span><br><span class="line">ADMPW ALL= （ root ） ADMPWCOM</span><br></pre></td></tr></table></figure><p>请注意，如果想通过<code>User_Alias</code>创建一个账号别名，或者通过<code>Cmnd_Alias</code>创建一个指令别名的时候，或者通过<code>Host_Alias</code>创建一个主机别名，别名一定要是大写字符，x、y和m都可以用别名来代替。这样我们之后想要添加用户或者添加命令只需要修改<code>User_Alias</code>和<code>Cmnd_Alias</code>这两行即可。</p><p>同一个账号如果在sudoers文件里面没有设置<code>NOPASSWD:</code>的话，短时间内多次使用sudo命令，只有第一次需要输入密码，这是因为中间有五分钟的间隔，如果间隔不超过五分钟，系统则认为接下来执行命令的还是你本人，只有超过五分钟才用重新输入密码。这样做减少了工作量，也在一定程度上保证了安全性。</p><p>sudo还可以搭配su使用，如果有几个你可以信任的用户，你想让他们帮助你完成你的工作，但是又不想泄露root密码，那么你就可以在sudoers文件中添加以下内容，让这几个用户输入<code>sudo su -</code>然后输入他们自己的密码，就可以切换到root用户的身份。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User_Alias ADMINS = user1,user2,user3</span><br><span class="line">ADMINS ALL= （ root ） /bin/su -</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+      <tags>
+        <tag>linux</tag>
+        <tag>安全</tag>
+        <tag>防火墙</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[sudo权限的管理]]></title>
+    <url>%2F2019-02-26-sudo%E6%9D%83%E9%99%90%E7%9A%84%E7%AE%A1%E7%90%86.html</url>
+    <content type="text"><![CDATA[Linux系统的权限管理不仅有用户权限管理，还有文件权限管理，这里主要是关于用户的权限管理，通俗的讲就是sudo用户的管理，管理sudo用户最主要的就是编辑/etc/sudoers文件。 而Linux用户默认是没有单独添加任何用户到sudoers文件里面的，所以我们需要以root用户的身份编辑sudoers文件。 visudo /etc/sudoers编辑sudoers文件 x y=(z) m 其中x为使用者的账号，即哪个账号可以使用sudo这个命令。%x意为x群组可以使用sudo这个命令。 y为登陆着的来源主机名称，即x账号从哪个主机登陆可以使用sudo命令，一般默认为ALL，即任意主机即可。 z为可切换的身份，即x账号通过执行sudo命令可以切换到z身份去执行sudo后面的命令。一般默认为root，也可设为系统中的其他用户。 m为可下达的指令，即x账号切换为z身份都能执行哪些命令，可以为ALL，即全部命令，也可以具体到某一条命令，比如vim、cd、cp，需要注意的是这里的m应该是命令的绝对路径，如果是passwd命令的话应该填成/usr/bin/passwd，这里推荐使用which 命令来查看命令的绝对路径。 m中多个命令用，隔开，也可以在绝对路径前面加上!，比如!/usr/bin/passwd意为passwd命令不可执行。m前也可以加上NOPASSWD:选项，表示用户使用sudo命令执行m命令的时候可以不用输入密码，直接执行。 如果有多个用户想要使用sudo命令，并且需要通过sudo命令去执行同一个命令，或者需要修改用户通过sudo执行的命令的时候，如果一个一个去添加，或者一个一个去修改，显得很麻烦，所以就有别名这一说法，别名指指令别名、账号别名、主机别名。 123User_Alias ADMPW = pro1, pro2, pro3, myuser1, myuser2Cmnd_Alias ADMPWCOM = !/usr/bin/passwd, /usr/bin/passwd [A-Za-z]*, !/usr/bin/passwd rootADMPW ALL= （ root ） ADMPWCOM 请注意，如果想通过User_Alias创建一个账号别名，或者通过Cmnd_Alias创建一个指令别名的时候，或者通过Host_Alias创建一个主机别名，别名一定要是大写字符，x、y和m都可以用别名来代替。这样我们之后想要添加用户或者添加命令只需要修改User_Alias和Cmnd_Alias这两行即可。 同一个账号如果在sudoers文件里面没有设置NOPASSWD:的话，短时间内多次使用sudo命令，只有第一次需要输入密码，这是因为中间有五分钟的间隔，如果间隔不超过五分钟，系统则认为接下来执行命令的还是你本人，只有超过五分钟才用重新输入密码。这样做减少了工作量，也在一定程度上保证了安全性。 sudo还可以搭配su使用，如果有几个你可以信任的用户，你想让他们帮助你完成你的工作，但是又不想泄露root密码，那么你就可以在sudoers文件中添加以下内容，让这几个用户输入sudo su -然后输入他们自己的密码，就可以切换到root用户的身份。 12User_Alias ADMINS = user1,user2,user3ADMINS ALL= （ root ） /bin/su -]]></content>
       <categories>
-          
-          <category> 教程 </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> Linux </tag>
-            
-            <tag> 权限管理 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>ubuntu使用LVM时遇到的问题及基本操作</title>
-      <link href="/2019-02-25-ubuntu%E4%BD%BF%E7%94%A8LVM%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html"/>
-      <url>/2019-02-25-ubuntu%E4%BD%BF%E7%94%A8LVM%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>前一段时间在公司实习的时候公司服务器磁盘管理严重不规范，并且一台服务器上有很多块磁盘，大小也不一样，有的磁盘使用率接近100%。有的磁盘使用率却只有不到20%，所以我就决定给磁盘做一下LVM，重新分区，然后再根据使用状况将不同的目录挂载到不同的分区。期间遇到了一些问题，趁着这次整理blog顺便将LVM的命令和遇到的问题整理一下大家一起学习。</p><h1 id="什么是lvm"><a href="#什么是lvm" class="headerlink" title="什么是lvm"></a>什么是lvm</h1><p>LVM是逻辑盘卷管理（Logical Volume Manager）的简称,它是一种磁盘管理工具，他的重点在于可以弹性的调整filesystem的容量，而且可以将多个实体的磁盘整合到一起，使其变成一个磁盘，还可以在以后继续往LVM管理的磁盘中添加或者删除实体磁盘。<br>LVM中有几个名词需要理解一下：</p><ul><li>PV（Physical Volume）实体卷轴</li><li>VG（Volume Group）卷轴群组</li><li>PE（Physical Extent）实体范围区块</li><li>LV（Logical Volume）逻辑卷轴<h1 id="LVM的使用"><a href="#LVM的使用" class="headerlink" title="LVM的使用"></a>LVM的使用</h1></li></ul><ol><li>首先需要安装一下lvm这个软件<br><code>sudo apt-get install lvm2</code></li><li>安装完之后首先将想要添加到LVM卷的磁盘转换磁盘ID，转换为Linux LVM<br><code>fdisk /dev/sda</code></li><li>格式化想要添加到LVM中的分区，并挂载到系统当中<br><code>mkfs.ext4</code> 或者 <code>mkfs.xfs</code>格式化,然后<code>mount</code>挂载</li><li>PV阶段<br>4.1 将磁盘创建为PV<br><code>pvcreate /dev/sda1</code><br>4.2 查看当前系统中已经转化为PV的磁盘<br><code>pvscan</code><br>4.3 为显示某一个pv的详细信息<br><code>pvdisplay /dev/sda1</code><br>4.4 为将该分区移除pv属性<br><code>pvremove /dev/sda</code></li><li>VG阶段<br>5.1 创建VG<br><code>vgcreate [-s N[mgt]] VG名称 PV名称</code><br>PS：-s后接的是PE的大小，单位为m，g，t（不区分大小写）<br>5.2 查看系统上所有的VG<br><code>vgscan</code><br>5.3 显示某一个VG的详细信息<br><code>vgdisplay VG名称</code><br>5.4 在VG中增加额外的PV<br><code>vgextend VG名称 PV名称</code><br>5.5 从VG中移除PV<br><code>vgreduce VG名称 PV名称</code><br>5.6 删除VG<br><code>vgremove VG名称</code></li><li>LV阶段<br>6.1 创建LV<br><code>lvcreate [-L N[mgt]] [-n LV名称 ] VG名称</code><br><code>lvcreate [-l N] [-n LV名称 ] VG名称</code><br>PS:创建LV有两种方式，一种是以容量为单位，即-L，因为LVM中容量的最小单位为PE，所以—L后面的数量必须  是PE的倍数，如果不是，系统会自动计算相近的容量。另一种是以PE的个数为单位，如果这么做，需要计算PE  的 数量，不过可以通过  <code>vgdisplay VG名称</code>  来查看一个VG中总共有多少个PE，已用多少，可用多少。<br>6.2 查询系统上的LV<br><code>lvscan</code><br>6.3 显示某一个LV的详细信息<br><code>lvdisplay LV全名</code><br>6.4 扩展LV的容量<br><code>lvextend -L +N[mgt] LV全名</code><br>6.5 减少LV的容量<br><code>lvreduce -L -N[mgt] LV全名</code><br>6.6 改变LV的容量<br><code>lvresize -L [+/-]N[mgt] LV全名</code><br>例如：<br>增加20G<code>lvresize -L +20G LV全名</code><br>或减小20G<code>lvresize -L -20G LV全名</code><br>或增大或减小到20G<code>lvresize  -L 20G LV全名</code><br>6.7 删除LV<br><code>lvremove LV全名</code><br>6.8 注意事项<br>LV的全名为<code>/dev/VG名称/LV名称</code><br>LV设置完成之后需要格式化并挂载才能使用，挂载之后LV为<code>/dev/mapper/VG名称-LV名称</code><br>我们linux使用的并不是LV，而是LV设备内的文件系统，目前只有XFS和EXT家族可以放大容量，只有EXT家族可  以缩小容量<br>改变LV容量之后想要生效需要执行<code>resize2fs LV全名</code></li><li>安装完lvm2之后使用lvm的相关命令是发现有错误，这是因为lvm的相关服务并没有开启，执行以下命令即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable lvm2-lvmetad.service</span><br><span class="line">systemctl enable lvm2-lvmetad.socket</span><br><span class="line">systemctl start lvm2-lvmetad.service</span><br><span class="line">systemctl start lvm2-lvmetad.socket</span><br></pre></td></tr></table></figure></li></ol>]]></content>
-      
-      
+      <tags>
+        <tag>Linux</tag>
+        <tag>权限管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ubuntu使用LVM时遇到的问题及基本操作]]></title>
+    <url>%2F2019-02-25-ubuntu%E4%BD%BF%E7%94%A8LVM%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html</url>
+    <content type="text"><![CDATA[背景介绍前一段时间在公司实习的时候公司服务器磁盘管理严重不规范，并且一台服务器上有很多块磁盘，大小也不一样，有的磁盘使用率接近100%。有的磁盘使用率却只有不到20%，所以我就决定给磁盘做一下LVM，重新分区，然后再根据使用状况将不同的目录挂载到不同的分区。期间遇到了一些问题，趁着这次整理blog顺便将LVM的命令和遇到的问题整理一下大家一起学习。 什么是lvmLVM是逻辑盘卷管理（Logical Volume Manager）的简称,它是一种磁盘管理工具，他的重点在于可以弹性的调整filesystem的容量，而且可以将多个实体的磁盘整合到一起，使其变成一个磁盘，还可以在以后继续往LVM管理的磁盘中添加或者删除实体磁盘。LVM中有几个名词需要理解一下： PV（Physical Volume）实体卷轴 VG（Volume Group）卷轴群组 PE（Physical Extent）实体范围区块 LV（Logical Volume）逻辑卷轴LVM的使用 首先需要安装一下lvm这个软件sudo apt-get install lvm2 安装完之后首先将想要添加到LVM卷的磁盘转换磁盘ID，转换为Linux LVMfdisk /dev/sda 格式化想要添加到LVM中的分区，并挂载到系统当中mkfs.ext4 或者 mkfs.xfs格式化,然后mount挂载 PV阶段4.1 将磁盘创建为PVpvcreate /dev/sda14.2 查看当前系统中已经转化为PV的磁盘pvscan4.3 为显示某一个pv的详细信息pvdisplay /dev/sda14.4 为将该分区移除pv属性pvremove /dev/sda VG阶段5.1 创建VGvgcreate [-s N[mgt]] VG名称 PV名称PS：-s后接的是PE的大小，单位为m，g，t（不区分大小写）5.2 查看系统上所有的VGvgscan5.3 显示某一个VG的详细信息vgdisplay VG名称5.4 在VG中增加额外的PVvgextend VG名称 PV名称5.5 从VG中移除PVvgreduce VG名称 PV名称5.6 删除VGvgremove VG名称 LV阶段6.1 创建LVlvcreate [-L N[mgt]] [-n LV名称 ] VG名称lvcreate [-l N] [-n LV名称 ] VG名称PS:创建LV有两种方式，一种是以容量为单位，即-L，因为LVM中容量的最小单位为PE，所以—L后面的数量必须 是PE的倍数，如果不是，系统会自动计算相近的容量。另一种是以PE的个数为单位，如果这么做，需要计算PE 的 数量，不过可以通过 vgdisplay VG名称 来查看一个VG中总共有多少个PE，已用多少，可用多少。6.2 查询系统上的LVlvscan6.3 显示某一个LV的详细信息lvdisplay LV全名6.4 扩展LV的容量lvextend -L +N[mgt] LV全名6.5 减少LV的容量lvreduce -L -N[mgt] LV全名6.6 改变LV的容量lvresize -L [+/-]N[mgt] LV全名例如：增加20Glvresize -L +20G LV全名或减小20Glvresize -L -20G LV全名或增大或减小到20Glvresize -L 20G LV全名6.7 删除LVlvremove LV全名6.8 注意事项LV的全名为/dev/VG名称/LV名称LV设置完成之后需要格式化并挂载才能使用，挂载之后LV为/dev/mapper/VG名称-LV名称我们linux使用的并不是LV，而是LV设备内的文件系统，目前只有XFS和EXT家族可以放大容量，只有EXT家族可 以缩小容量改变LV容量之后想要生效需要执行resize2fs LV全名 安装完lvm2之后使用lvm的相关命令是发现有错误，这是因为lvm的相关服务并没有开启，执行以下命令即可1234systemctl enable lvm2-lvmetad.servicesystemctl enable lvm2-lvmetad.socketsystemctl start lvm2-lvmetad.servicesystemctl start lvm2-lvmetad.socket]]></content>
       <categories>
-          
-          <category> 教程 </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> Ubuntu </tag>
-            
-            <tag> LVM </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>ubuntu重做引导</title>
-      <link href="/2019-02-25-ubuntu%E9%87%8D%E5%81%9A%E5%BC%95%E5%AF%BC.html"/>
-      <url>/2019-02-25-ubuntu%E9%87%8D%E5%81%9A%E5%BC%95%E5%AF%BC.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>相信很多小伙伴都遇到过Ubuntu系统丢失引导的问题。这个问题之所以会出现一般有一下几点：</p><ol><li>安装完Ubuntu系统之后又安装Windows系统，导致Windows系统引导覆盖掉了Ubuntu系统的引导。</li><li>安装好系统之后不小心动到了安装引导的分区，导致引导丢失。</li><li>电脑操作系统出现问题的情况千千万万，数不胜数，就不一一列举。</li></ol><h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><ol><li><p>首先你要有一个Ubuntu的系统盘，不过既然你已经安装了Ubuntu系统，系统盘应该是有的。</p></li><li><p>通过系统盘启动，选择试用系统。</p></li><li><p>打开终端，可以桌面右键然后选择终端，也可以ctrl+alt+T快捷键打开。</p></li><li><p><code>sudo -i</code>切换至root用户。</p></li><li><p><code>fdisk -l</code>查看自己系统目前的分区状况。</p><p><img src="/images/ubuntu分区.png" alt="分区状况"></p><p>由图可见Ubuntu分区是有很明确的分区描述的，只需通过分区大小确定你的根目录所在分区，然后在第7步挂载你的根目录所在分区即可。</p></li><li><p><code>mkdir /media/ubuntu</code>创建一个文件夹用来挂载Ubuntu系统，可以不必一定创建这个目录。</p></li><li><p><code>mount /dev/sda4 /media/ubuntu</code>挂载Ubuntu系统到这个目录下。/dev/sda4即第5步所看到的Ubuntu系统所在的分区。<br>挂载完成之后可以<code>ls /media/ubuntu</code>查看一下，确保挂载的为根目录，而不是/home目录或其他目录。</p></li><li><p><code>grub-install --root-directory=/media/ubuntu /dev/sda</code> 修复grub引导。</p></li><li><p>此时你的Ubuntu系统的引导已经修复完成，重启系统即可直接进入Ubuntu系统。</p></li><li><p>如果你安装的还有Windows系统的话，这时你在grub界面已经看不到你的Windows系统的引导选项了。</p><p>这是因为刚才修复的Ubuntu系统的引导已经将其覆盖掉了。</p><p>修复引导很简单，进入系统以后打开终端输入<code>sudo update-grub</code>即可。</p></li></ol>]]></content>
-      
-      
+      <tags>
+        <tag>Ubuntu</tag>
+        <tag>LVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ubuntu重做引导]]></title>
+    <url>%2F2019-02-25-ubuntu%E9%87%8D%E5%81%9A%E5%BC%95%E5%AF%BC.html</url>
+    <content type="text"><![CDATA[背景介绍相信很多小伙伴都遇到过Ubuntu系统丢失引导的问题。这个问题之所以会出现一般有一下几点： 安装完Ubuntu系统之后又安装Windows系统，导致Windows系统引导覆盖掉了Ubuntu系统的引导。 安装好系统之后不小心动到了安装引导的分区，导致引导丢失。 电脑操作系统出现问题的情况千千万万，数不胜数，就不一一列举。 解决办法 首先你要有一个Ubuntu的系统盘，不过既然你已经安装了Ubuntu系统，系统盘应该是有的。 通过系统盘启动，选择试用系统。 打开终端，可以桌面右键然后选择终端，也可以ctrl+alt+T快捷键打开。 sudo -i切换至root用户。 fdisk -l查看自己系统目前的分区状况。 由图可见Ubuntu分区是有很明确的分区描述的，只需通过分区大小确定你的根目录所在分区，然后在第7步挂载你的根目录所在分区即可。 mkdir /media/ubuntu创建一个文件夹用来挂载Ubuntu系统，可以不必一定创建这个目录。 mount /dev/sda4 /media/ubuntu挂载Ubuntu系统到这个目录下。/dev/sda4即第5步所看到的Ubuntu系统所在的分区。挂载完成之后可以ls /media/ubuntu查看一下，确保挂载的为根目录，而不是/home目录或其他目录。 grub-install --root-directory=/media/ubuntu /dev/sda 修复grub引导。 此时你的Ubuntu系统的引导已经修复完成，重启系统即可直接进入Ubuntu系统。 如果你安装的还有Windows系统的话，这时你在grub界面已经看不到你的Windows系统的引导选项了。 这是因为刚才修复的Ubuntu系统的引导已经将其覆盖掉了。 修复引导很简单，进入系统以后打开终端输入sudo update-grub即可。]]></content>
       <categories>
-          
-          <category> 教程 </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> Ubuntu </tag>
-            
-            <tag> 装机 </tag>
-            
-            <tag> 双系统 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>windows_server限制2人连接</title>
-      <link href="/2019-02-25-windows-server%E9%99%90%E5%88%B62%E4%BA%BA%E8%BF%9E%E6%8E%A5.html"/>
-      <url>/2019-02-25-windows-server%E9%99%90%E5%88%B62%E4%BA%BA%E8%BF%9E%E6%8E%A5.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>之所以写这篇博客，是因为之前在公司实习的时候遇到了一个问题，多人使用同一台Windows server服务器，一直连接着的时候还没问题，但是如果某个人断开连接以后就无法再重新连接上了，经过多方排查，发现问题出在Windows server的远程连接机制上。<br>原来微软对Windows server的远程登陆有人数限制，最多只能有两个，如果超过这个数目的人数想使用就必须使用license server进行授权才可以，而且据说授权是收费行为。<br>那么为什么一开始可以多人同时连接呢，原来官方给予了120天的实践来配置license server，如果超过120天仍没有可用的license server，就会出现无法连接的问题。</p><h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>这里给出的解决方案是修改注册表</p><ol><li><p>win+R打开运行框，输入regedit</p></li><li><p>找到 <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TerminalServer\RCM\GracePeriod</code></p></li><li><p>删除 <code>REG_BINARY</code></p></li><li><p>重启服务器</p></li></ol><p>这样你就可以重新获得120天的免费使用。<br>修改注册表是投机取巧的办法，也比较麻烦，所以可以部署license server来直接授权使用。但是部署服务器来进行授权比较麻烦，感兴趣的可以自己<a href="https://www.baidu.com" target="_blank" rel="noopener">百度</a>或者<a href="https://www.google.com.hk" target="_blank" rel="noopener">Google</a>一下。</p>]]></content>
-      
-      
+      <tags>
+        <tag>Ubuntu</tag>
+        <tag>装机</tag>
+        <tag>双系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[windows_server限制2人连接]]></title>
+    <url>%2F2019-02-25-windows-server%E9%99%90%E5%88%B62%E4%BA%BA%E8%BF%9E%E6%8E%A5.html</url>
+    <content type="text"><![CDATA[背景介绍之所以写这篇博客，是因为之前在公司实习的时候遇到了一个问题，多人使用同一台Windows server服务器，一直连接着的时候还没问题，但是如果某个人断开连接以后就无法再重新连接上了，经过多方排查，发现问题出在Windows server的远程连接机制上。原来微软对Windows server的远程登陆有人数限制，最多只能有两个，如果超过这个数目的人数想使用就必须使用license server进行授权才可以，而且据说授权是收费行为。那么为什么一开始可以多人同时连接呢，原来官方给予了120天的实践来配置license server，如果超过120天仍没有可用的license server，就会出现无法连接的问题。 解决方案这里给出的解决方案是修改注册表 win+R打开运行框，输入regedit 找到 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TerminalServer\RCM\GracePeriod 删除 REG_BINARY 重启服务器 这样你就可以重新获得120天的免费使用。修改注册表是投机取巧的办法，也比较麻烦，所以可以部署license server来直接授权使用。但是部署服务器来进行授权比较麻烦，感兴趣的可以自己百度或者Google一下。]]></content>
       <categories>
-          
-          <category> 教程 </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 教程 </tag>
-            
-            <tag> Windows_server </tag>
-            
-            <tag> 远程连接 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>centos7搭建ss</title>
-      <link href="/2019-02-24-centos7%E6%90%AD%E5%BB%BAss.html"/>
-      <url>/2019-02-24-centos7%E6%90%AD%E5%BB%BAss.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="服务搭建"><a href="#服务搭建" class="headerlink" title="服务搭建"></a>服务搭建</h1><ol><li><p>连接上租的vps之后首先要更新一下</p><p><code>yum -y update</code></p></li><li><p>然后安装比较常用的软件</p><p><code>yum -y install wget vim</code></p></li><li><p>进入ssh配置目录修改ssh端口号为不常用的端口号（这里我用的是1996）</p><p><code>vim /etc/ssh/sshd_config</code></p></li><li><p>安装pip</p><p>4.1 先安装依赖</p><p><code>yum -y install epel-release</code></p><p>4.2 安装pip</p><p><code>yum -y install pip python-pip</code></p><p>4.3 更新pip版本</p><p><code>pip install --upgrade pip</code></p></li><li><p>pip安装shadowsocks</p><p><code>pip install shadowsocks</code></p></li><li><p>修改配置文件</p><p><code>vim /etc/shadowsocks.json</code></p><p>单用户内容为</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;服务器的IP地址&quot;,</span><br><span class="line">    &quot;server_port&quot;:服务监听的端口号,</span><br><span class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;password&quot;:&quot;监听端口密码&quot;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;rc4-md5&quot;,</span><br><span class="line">    &quot;fast_open&quot;: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>多用户内容为</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;服务器IP地址&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;port_password&quot;:&#123;</span><br><span class="line">         &quot;8989&quot;:&quot;password0&quot;,</span><br><span class="line">         &quot;9004&quot;:&quot;password2&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;rc4-md5&quot;,</span><br><span class="line">    &quot;fast_open&quot;: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol><h1 id="配套软件的安装"><a href="#配套软件的安装" class="headerlink" title="配套软件的安装"></a>配套软件的安装</h1><ol><li><p>运行前安装加密</p><p><code>yum -y install m2crypto</code></p></li><li><p>（可选）安装gevent<br>安装gevent可以提高Shadowsocks的性能。CentOS下安装gevent依赖libevent和greenlet。</p><p>2.1 安装libevent</p><p><code>yum install -y libevent</code></p><p>2.2 安装greenlet</p><p><code>pip install  greenlet</code></p><p>2.3 安装gevent</p><p><code>pip install gevent</code></p></li><li><p>安装破解版锐速</p><p>3.1 首先判断系统版本</p><p><code>uname -r</code></p><p>如果输出结果以2开头，例如2.6.32-696.18.7.el6.x86_64，则为centos6 x64系统。</p><p>如果输出结果以3开头，例如3.10.0-693.11.6.el7.x86_64，则为centos7 x64系统。</p><p>如果输出结果以4开头，例如4.12.10-1.el7.elrepo.x86_64，则说明服务器已经安装Google BBR拥塞控制系统，此时无法继续安装锐速。</p><p>3.2 更新系统内核版本</p><p><code>wget --no-check-certificate -O rskernel.sh https://raw.githubusercontent.com/uxh/shadowsocks_bash/master/rskernel.sh &amp;&amp; bash rskernel.sh</code></p><p>内核更新完毕以后会自动重启。</p><p>3.3 安装锐速</p><p><code>yum install net-tools -y &amp;&amp; wget --no-check-certificate -O appex.sh https://raw.githubusercontent.com/0oVicero0/serverSpeeder_Install/master/appex.sh &amp;&amp; bash appex.sh install</code></p><p>输入以上命令，回车后系统会自动下载脚本并执行。   </p><p>所有设置都直接默认回车继续，即可完成安装。</p><p>当出现以下信息时说明锐速安装成功并开机自启动。   </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Running Status]</span><br><span class="line">ServerSpeeder is running!</span><br><span class="line">version     3.11.20.10</span><br></pre></td></tr></table></figure></li></ol><h1 id="shadowsocks服务命令与开机自启动"><a href="#shadowsocks服务命令与开机自启动" class="headerlink" title="shadowsocks服务命令与开机自启动"></a>shadowsocks服务命令与开机自启动</h1><ol><li><p>启动与停止shadowsocks</p><p>启动<code>ssserver -c /etc/shadowsocks.json -d start</code></p><p>停止<code>ssserver -c /etc/shadowsocks.json -d stop</code></p></li><li><p>配置开机启动</p><p>2.1 在/etc/systemd/system/下添加一个shadowsocks服务</p><p><code>vim /etc/systemd/system/shadowsocks.service</code></p><p><strong>内容见文末</strong></p><p>2.3 启动停止服务</p><p><code>systemctl { status | start | stop | restart } shadowsocks</code></p><p>2.4 添加开机启动服务</p><p><code>systemctl enable shadowsocks</code></p></li><li><p>添加防火墙对应端口的规则（ssh服务和shadowsocks服务开启的端口都需要添加）</p><p><code>firewall-cmd --zone=public --add-port=1996/tcp --permanent</code></p></li><li><p>重启ssh服务和防火墙</p><p><code>systemctl rstart sshd</code><br><code>firewall-cmd --reload</code></p></li></ol><hr><p><strong><em>附</em></strong>：</p><p>/etc/systemd/system/shadowsocks文件内容</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=ssserver</span><br><span class="line">[Service]</span><br><span class="line">TimeoutStartSec=0</span><br><span class="line">ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+      <tags>
+        <tag>教程</tag>
+        <tag>Windows_server</tag>
+        <tag>远程连接</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[centos7搭建ss]]></title>
+    <url>%2F2019-02-24-centos7%E6%90%AD%E5%BB%BAss.html</url>
+    <content type="text"><![CDATA[服务搭建 连接上租的vps之后首先要更新一下 yum -y update 然后安装比较常用的软件 yum -y install wget vim 进入ssh配置目录修改ssh端口号为不常用的端口号（这里我用的是1996） vim /etc/ssh/sshd_config 安装pip 4.1 先安装依赖 yum -y install epel-release 4.2 安装pip yum -y install pip python-pip 4.3 更新pip版本 pip install --upgrade pip pip安装shadowsocks pip install shadowsocks 修改配置文件 vim /etc/shadowsocks.json 单用户内容为 12345678910&#123; &quot;server&quot;:&quot;服务器的IP地址&quot;, &quot;server_port&quot;:服务监听的端口号, &quot;local_address&quot;: &quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;password&quot;:&quot;监听端口密码&quot;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;rc4-md5&quot;, &quot;fast_open&quot;: false&#125; 多用户内容为 123456789101112&#123; &quot;server&quot;:&quot;服务器IP地址&quot;, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;port_password&quot;:&#123; &quot;8989&quot;:&quot;password0&quot;, &quot;9004&quot;:&quot;password2&quot; &#125;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;rc4-md5&quot;, &quot;fast_open&quot;: false&#125; 配套软件的安装 运行前安装加密 yum -y install m2crypto （可选）安装gevent安装gevent可以提高Shadowsocks的性能。CentOS下安装gevent依赖libevent和greenlet。 2.1 安装libevent yum install -y libevent 2.2 安装greenlet pip install greenlet 2.3 安装gevent pip install gevent 安装破解版锐速 3.1 首先判断系统版本 uname -r 如果输出结果以2开头，例如2.6.32-696.18.7.el6.x86_64，则为centos6 x64系统。 如果输出结果以3开头，例如3.10.0-693.11.6.el7.x86_64，则为centos7 x64系统。 如果输出结果以4开头，例如4.12.10-1.el7.elrepo.x86_64，则说明服务器已经安装Google BBR拥塞控制系统，此时无法继续安装锐速。 3.2 更新系统内核版本 wget --no-check-certificate -O rskernel.sh https://raw.githubusercontent.com/uxh/shadowsocks_bash/master/rskernel.sh &amp;&amp; bash rskernel.sh 内核更新完毕以后会自动重启。 3.3 安装锐速 yum install net-tools -y &amp;&amp; wget --no-check-certificate -O appex.sh https://raw.githubusercontent.com/0oVicero0/serverSpeeder_Install/master/appex.sh &amp;&amp; bash appex.sh install 输入以上命令，回车后系统会自动下载脚本并执行。 所有设置都直接默认回车继续，即可完成安装。 当出现以下信息时说明锐速安装成功并开机自启动。 123[Running Status]ServerSpeeder is running!version 3.11.20.10 shadowsocks服务命令与开机自启动 启动与停止shadowsocks 启动ssserver -c /etc/shadowsocks.json -d start 停止ssserver -c /etc/shadowsocks.json -d stop 配置开机启动 2.1 在/etc/systemd/system/下添加一个shadowsocks服务 vim /etc/systemd/system/shadowsocks.service 内容见文末 2.3 启动停止服务 systemctl { status | start | stop | restart } shadowsocks 2.4 添加开机启动服务 systemctl enable shadowsocks 添加防火墙对应端口的规则（ssh服务和shadowsocks服务开启的端口都需要添加） firewall-cmd --zone=public --add-port=1996/tcp --permanent 重启ssh服务和防火墙 systemctl rstart sshdfirewall-cmd --reload 附： /etc/systemd/system/shadowsocks文件内容 1234567[Unit]Description=ssserver[Service]TimeoutStartSec=0ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json[Install]WantedBy=multi-user.target]]></content>
       <categories>
-          
-          <category> 教程 </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 建站 </tag>
-            
-            <tag> shadowsocks </tag>
-            
-            <tag> centos </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>centos6搭建ss</title>
-      <link href="/2019-02-24-centos6%E6%90%AD%E5%BB%BAss.html"/>
-      <url>/2019-02-24-centos6%E6%90%AD%E5%BB%BAss.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="服务搭建"><a href="#服务搭建" class="headerlink" title="服务搭建"></a>服务搭建</h1><ol><li><p>连接上租的vps之后首先要更新一下</p><p><code>yum -y update</code></p></li><li><p>然后安装比较常用的软件</p><p><code>yum -y install wget vim</code></p></li><li><p>进入ssh配置目录修改ssh端口号为不常用的端口号（这里我用的是1996）</p><p><code>vim /etc/ssh/sshd_config</code></p></li><li><p>更新python版本（由于默认安装的是python2.6版本，需要先升级为2.7版本）</p><p>4.1 先安装依赖</p><p><code>yum -y install gcc openssl-devel bzip2-devel</code></p><p>4.2 下载软件包</p><p><code>cd /opt &amp;&amp; wget https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz</code></p><p>4.3 解压</p><p><code>tar xvzf Python-2.7.15.tgz</code></p><p>4.4 进入目录安装（在检测脚本中加上enable-optimizations优化，主要是在这个版本上能启用PGO优化，让Python在运行时能变得更快。make 加altinstall参数，避免覆盖原来安装在/usr/bin/python 的版本。）</p><p><code>cd Python-2.7.15</code><br><code>./configure --enable-optimizations</code><br><code>make &amp;&amp; make altinstall</code></p><p>4.5 查看是否安装成功</p><p><code>/usr/local/bin/python2.7 -V</code></p></li></ol><p>返回2.7.15则成功，继续进行下一步<br> 4.6 建立软链接，使系统默认python指向2.7版本</p><p> <code>mv /usr/bin/python /usr/bin/python2.6.6</code>   (备份原来的2.6版本的python)<br> <code>ln -s /usr/local/bin/python2.7 /usr/bin/python</code></p><p> 4.7 解决yum不支持2.7版本的问题</p><p> <code>sed -i &#39;s/python/python2.6.6/&#39; /usr/bin/yum</code></p><ol start="5"><li><p>安装pip（因为2.7.15版本已经内建了ensurepip模块，所以直接运行下面的命令去安装pip即可）默认安装的pip为9版本，你需要再升级一下pip版本</p><p><code>python -m ensurepip</code><br><code>pip install --upgrade pip</code></p></li><li><p>pip安装shadowsocks</p><p><code>pip install shadowsocks</code></p></li><li><p>修改配置文件</p><p><code>vim /etc/shadowsocks.json</code></p><p>单用户内容为</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;服务器的IP地址&quot;,</span><br><span class="line">    &quot;server_port&quot;:服务监听的端口号,</span><br><span class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;password&quot;:&quot;监听端口密码&quot;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;rc4-md5&quot;,</span><br><span class="line">    &quot;fast_open&quot;: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>多用户内容为</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;服务器IP地址&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;port_password&quot;:&#123;</span><br><span class="line">         &quot;8989&quot;:&quot;password0&quot;,</span><br><span class="line">         &quot;9004&quot;:&quot;password2&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;rc4-md5&quot;,</span><br><span class="line">    &quot;fast_open&quot;: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol><h1 id="配套软件的安装"><a href="#配套软件的安装" class="headerlink" title="配套软件的安装"></a>配套软件的安装</h1><ol><li><p>运行前安装加密</p><p><code>yum -y install m2crypto</code></p></li><li><p>（可选）安装gevent<br>安装gevent可以提高Shadowsocks的性能。CentOS下安装gevent依赖libevent和greenlet。</p><p>2.1 安装libevent</p><p><code>yum install -y libevent</code></p><p>2.2 安装greenlet</p><p><code>pip install  greenlet</code></p><p>2.3 安装gevent</p><p><code>pip install gevent</code></p></li><li><p>安装破解版锐速</p><p>3.1 首先判断系统版本</p><p><code>uname -r</code></p><p>如果输出结果以2开头，例如2.6.32-696.18.7.el6.x86_64，则为centos6 x64系统。</p><p>如果输出结果以3开头，例如3.10.0-693.11.6.el7.x86_64，则为centos7 x64系统。</p><p>如果输出结果以4开头，例如4.12.10-1.el7.elrepo.x86_64，则说明服务器已经安装Google BBR拥塞控制系统，此时无法继续安装锐速。</p><p>3.2 安装锐速</p><p><code>wget --no-check-certificate -O appex.sh https://raw.githubusercontent.com/0oVicero0/serverSpeeder_Install/master/appex.sh &amp;&amp; bash appex.sh install &#39;2.6.32-642.el6.x86_64&#39;</code></p><p>输入以上命令，回车后系统会自动下载脚本并执行。   </p><p>所有设置都直接默认回车继续，即可完成安装。</p><p>当出现以下信息时说明锐速安装成功并开机自启动。   </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Running Status]</span><br><span class="line">ServerSpeeder is running!</span><br><span class="line">version     3.11.20.10</span><br></pre></td></tr></table></figure></li></ol><h1 id="shadowsocks服务命令与开机自启动"><a href="#shadowsocks服务命令与开机自启动" class="headerlink" title="shadowsocks服务命令与开机自启动"></a>shadowsocks服务命令与开机自启动</h1><ol><li><p>启动与停止shadowsocks</p><p>启动<code>ssserver -c /etc/shadowsocks.json -d start</code></p><p>停止<code>ssserver -c /etc/shadowsocks.json -d stop</code></p></li><li><p>配置开机启动</p><p>2.1 在/etc/init.d/下添加一个shadowsocks服务</p><p><code>vim /etc/init.d/shadowsocks</code></p><p><strong>内容见文末</strong></p><p>2.2 添加执行权限</p><p><code>chmod +x /etc/init.d/shadowsocks</code></p><p>2.3 启动停止服务</p><p><code>services shadowsocks { status | start | stop | restart }</code></p><p>2.4 添加开机启动服务</p><p><code>chkconfig --add shadowsocks</code><br><code>chkconfig --list shadowsocks</code></p><p>输出shadowsocks     0:off   1:off   2:on    3:on    4:on    5:on    6:off即为成功。</p></li><li><p>关闭防火墙，并关闭防火墙自启动</p><p><code>service iptables stop</code><br><code>chkconfig iptables off</code><br><code>chkconfig --list iptables</code><br>（检查防火墙是否关闭自启动iptables        0:off   1:off   2:off   3:off   4:off   5:off   6:off）</p></li><li><p>重启ssh服务</p><p><code>service sshd restart</code></p></li></ol><hr><p><strong><em>附</em></strong>：</p><p>/etc/init.d/shadowsocks文件内容</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"># chkconfig: 2345 90 10</span><br><span class="line"># description: Start or stop the Shadowsocks server</span><br><span class="line">#</span><br><span class="line">### BEGIN INIT INFO</span><br><span class="line"># Provides: Shadowsocks</span><br><span class="line"># Required-Start: $network $syslog</span><br><span class="line"># Required-Stop: $network</span><br><span class="line"># Default-Start: 2 3 4 5</span><br><span class="line"># Default-Stop: 0 1 6</span><br><span class="line"># Description: Start or stop the Shadowsocks server</span><br><span class="line">### END INIT INFO</span><br><span class="line"># Author: xju &lt;qing0991@163.com&gt;</span><br><span class="line">name=shadowsocks</span><br><span class="line">BIN=/usr/local/bin/ssserver</span><br><span class="line">conf=/etc/shadowsocks.json</span><br><span class="line">start()&#123;</span><br><span class="line">    $BIN -c $conf -d start</span><br><span class="line">    RETVAL=$?</span><br><span class="line">    if [ &quot;$RETVAL&quot; = &quot;0&quot; ]; then</span><br><span class="line">        echo &quot;$name start success&quot;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;$name start failed&quot;</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">stop()&#123;</span><br><span class="line">    pid=`ps -ef | grep -v grep | grep -v ps | grep -i &quot;$&#123;BIN&#125;&quot; | awk &apos;&#123;print $2&#125;&apos;`</span><br><span class="line">    if [ ! -z $pid ]; then</span><br><span class="line">        $BIN -c $conf -d stop</span><br><span class="line">        RETVAL=$?</span><br><span class="line">        if [ &quot;$RETVAL&quot; = &quot;0&quot; ]; then</span><br><span class="line">            echo &quot;$name stop success&quot;</span><br><span class="line">        else</span><br><span class="line">            echo &quot;$name stop failed&quot;</span><br><span class="line">        fi</span><br><span class="line">    else</span><br><span class="line">        echo &quot;$name is not running&quot;</span><br><span class="line">        RETVAL=1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">status()&#123;</span><br><span class="line">    pid=`ps -ef | grep -v grep | grep -v ps | grep -i &quot;$&#123;BIN&#125;&quot; | awk &apos;&#123;print $2&#125;&apos;`</span><br><span class="line">    if [ -z $pid ]; then</span><br><span class="line">        echo &quot;$name is not running&quot;</span><br><span class="line">        RETVAL=1</span><br><span class="line">    else</span><br><span class="line">        echo &quot;$name is running with PID $pid&quot;</span><br><span class="line">        RETVAL=0</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">&apos;start&apos;)</span><br><span class="line">    start</span><br><span class="line">    ;;</span><br><span class="line">&apos;stop&apos;)</span><br><span class="line">    stop</span><br><span class="line">    ;;</span><br><span class="line">&apos;status&apos;)</span><br><span class="line">    status</span><br><span class="line">    ;;</span><br><span class="line">&apos;restart&apos;)</span><br><span class="line">    stop</span><br><span class="line">    start</span><br><span class="line">    RETVAL=$?</span><br><span class="line">    ;;</span><br><span class="line">*)</span><br><span class="line">    echo &quot;Usage: $0 &#123; start | stop | restart | status &#125;&quot;</span><br><span class="line">    RETVAL=1</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br><span class="line">exit $RETVAL</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+      <tags>
+        <tag>建站</tag>
+        <tag>shadowsocks</tag>
+        <tag>centos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[centos6搭建ss]]></title>
+    <url>%2F2019-02-24-centos6%E6%90%AD%E5%BB%BAss.html</url>
+    <content type="text"><![CDATA[服务搭建 连接上租的vps之后首先要更新一下 yum -y update 然后安装比较常用的软件 yum -y install wget vim 进入ssh配置目录修改ssh端口号为不常用的端口号（这里我用的是1996） vim /etc/ssh/sshd_config 更新python版本（由于默认安装的是python2.6版本，需要先升级为2.7版本） 4.1 先安装依赖 yum -y install gcc openssl-devel bzip2-devel 4.2 下载软件包 cd /opt &amp;&amp; wget https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz 4.3 解压 tar xvzf Python-2.7.15.tgz 4.4 进入目录安装（在检测脚本中加上enable-optimizations优化，主要是在这个版本上能启用PGO优化，让Python在运行时能变得更快。make 加altinstall参数，避免覆盖原来安装在/usr/bin/python 的版本。） cd Python-2.7.15./configure --enable-optimizationsmake &amp;&amp; make altinstall 4.5 查看是否安装成功 /usr/local/bin/python2.7 -V 返回2.7.15则成功，继续进行下一步 4.6 建立软链接，使系统默认python指向2.7版本 mv /usr/bin/python /usr/bin/python2.6.6 (备份原来的2.6版本的python) ln -s /usr/local/bin/python2.7 /usr/bin/python 4.7 解决yum不支持2.7版本的问题 sed -i &#39;s/python/python2.6.6/&#39; /usr/bin/yum 安装pip（因为2.7.15版本已经内建了ensurepip模块，所以直接运行下面的命令去安装pip即可）默认安装的pip为9版本，你需要再升级一下pip版本 python -m ensurepippip install --upgrade pip pip安装shadowsocks pip install shadowsocks 修改配置文件 vim /etc/shadowsocks.json 单用户内容为 12345678910&#123; &quot;server&quot;:&quot;服务器的IP地址&quot;, &quot;server_port&quot;:服务监听的端口号, &quot;local_address&quot;: &quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;password&quot;:&quot;监听端口密码&quot;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;rc4-md5&quot;, &quot;fast_open&quot;: false&#125; 多用户内容为 123456789101112&#123; &quot;server&quot;:&quot;服务器IP地址&quot;, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;port_password&quot;:&#123; &quot;8989&quot;:&quot;password0&quot;, &quot;9004&quot;:&quot;password2&quot; &#125;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;rc4-md5&quot;, &quot;fast_open&quot;: false&#125; 配套软件的安装 运行前安装加密 yum -y install m2crypto （可选）安装gevent安装gevent可以提高Shadowsocks的性能。CentOS下安装gevent依赖libevent和greenlet。 2.1 安装libevent yum install -y libevent 2.2 安装greenlet pip install greenlet 2.3 安装gevent pip install gevent 安装破解版锐速 3.1 首先判断系统版本 uname -r 如果输出结果以2开头，例如2.6.32-696.18.7.el6.x86_64，则为centos6 x64系统。 如果输出结果以3开头，例如3.10.0-693.11.6.el7.x86_64，则为centos7 x64系统。 如果输出结果以4开头，例如4.12.10-1.el7.elrepo.x86_64，则说明服务器已经安装Google BBR拥塞控制系统，此时无法继续安装锐速。 3.2 安装锐速 wget --no-check-certificate -O appex.sh https://raw.githubusercontent.com/0oVicero0/serverSpeeder_Install/master/appex.sh &amp;&amp; bash appex.sh install &#39;2.6.32-642.el6.x86_64&#39; 输入以上命令，回车后系统会自动下载脚本并执行。 所有设置都直接默认回车继续，即可完成安装。 当出现以下信息时说明锐速安装成功并开机自启动。 123[Running Status]ServerSpeeder is running!version 3.11.20.10 shadowsocks服务命令与开机自启动 启动与停止shadowsocks 启动ssserver -c /etc/shadowsocks.json -d start 停止ssserver -c /etc/shadowsocks.json -d stop 配置开机启动 2.1 在/etc/init.d/下添加一个shadowsocks服务 vim /etc/init.d/shadowsocks 内容见文末 2.2 添加执行权限 chmod +x /etc/init.d/shadowsocks 2.3 启动停止服务 services shadowsocks { status | start | stop | restart } 2.4 添加开机启动服务 chkconfig --add shadowsockschkconfig --list shadowsocks 输出shadowsocks 0:off 1:off 2:on 3:on 4:on 5:on 6:off即为成功。 关闭防火墙，并关闭防火墙自启动 service iptables stopchkconfig iptables offchkconfig --list iptables（检查防火墙是否关闭自启动iptables 0:off 1:off 2:off 3:off 4:off 5:off 6:off） 重启ssh服务 service sshd restart 附： /etc/init.d/shadowsocks文件内容 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071#!/bin/sh# chkconfig: 2345 90 10# description: Start or stop the Shadowsocks server#### BEGIN INIT INFO# Provides: Shadowsocks# Required-Start: $network $syslog# Required-Stop: $network# Default-Start: 2 3 4 5# Default-Stop: 0 1 6# Description: Start or stop the Shadowsocks server### END INIT INFO# Author: xju &lt;qing0991@163.com&gt;name=shadowsocksBIN=/usr/local/bin/ssserverconf=/etc/shadowsocks.jsonstart()&#123; $BIN -c $conf -d start RETVAL=$? if [ &quot;$RETVAL&quot; = &quot;0&quot; ]; then echo &quot;$name start success&quot; else echo &quot;$name start failed&quot; fi&#125;stop()&#123; pid=`ps -ef | grep -v grep | grep -v ps | grep -i &quot;$&#123;BIN&#125;&quot; | awk &apos;&#123;print $2&#125;&apos;` if [ ! -z $pid ]; then $BIN -c $conf -d stop RETVAL=$? if [ &quot;$RETVAL&quot; = &quot;0&quot; ]; then echo &quot;$name stop success&quot; else echo &quot;$name stop failed&quot; fi else echo &quot;$name is not running&quot; RETVAL=1 fi&#125;status()&#123; pid=`ps -ef | grep -v grep | grep -v ps | grep -i &quot;$&#123;BIN&#125;&quot; | awk &apos;&#123;print $2&#125;&apos;` if [ -z $pid ]; then echo &quot;$name is not running&quot; RETVAL=1 else echo &quot;$name is running with PID $pid&quot; RETVAL=0 fi&#125;case &quot;$1&quot; in&apos;start&apos;) start ;;&apos;stop&apos;) stop ;;&apos;status&apos;) status ;;&apos;restart&apos;) stop start RETVAL=$? ;;*) echo &quot;Usage: $0 &#123; start | stop | restart | status &#125;&quot; RETVAL=1 ;;esacexit $RETVAL]]></content>
       <categories>
-          
-          <category> 教程 </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 建站 </tag>
-            
-            <tag> centos6 </tag>
-            
-            <tag> shadowsocks </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>建站</tag>
+        <tag>centos6</tag>
+        <tag>shadowsocks</tag>
+      </tags>
+  </entry>
 </search>
